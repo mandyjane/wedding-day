@@ -729,6 +729,16 @@ const DEFAULT_DATA = {
           ]
         },
         {
+          id: 's-week-appts',
+          name: 'Appointments',
+          items: [
+            { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct', checked: false },
+            { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
+            { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
+            { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct', checked: false },
+          ]
+        },
+        {
           id: 's-week-clean',
           name: 'House clean',
           items: [
@@ -744,16 +754,6 @@ const DEFAULT_DATA = {
             { id: 'hc10', text: 'Vacuum floor', note: '', checked: false },
             { id: 'hc11', text: 'Mop floor', note: '', checked: false },
             { id: 'hc12', text: 'Windex windows and mirrors', note: '', checked: false },
-          ]
-        },
-        {
-          id: 's-week-appts',
-          name: 'Appointments',
-          items: [
-            { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct', checked: false },
-            { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
-            { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
-            { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct', checked: false },
           ]
         }
       ]
@@ -1083,6 +1083,13 @@ try {
       const appts = week.sections.find(s => s.id === 's-week-appts');
       if (appts && !appts.items.some(i => i.id === 'ap4')) {
         appts.items.push({ id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct', checked: false });
+      }
+      // Ensure Appointments sits above House clean
+      const ai = week.sections.findIndex(s => s.id === 's-week-appts');
+      const ci = week.sections.findIndex(s => s.id === 's-week-clean');
+      if (ai > -1 && ci > -1 && ai > ci) {
+        const [sec] = week.sections.splice(ai, 1);
+        week.sections.splice(ci, 0, sec);
       }
     }
     // Add "Boutonniere for Dad" to Bride's Gifts & keepsakes
