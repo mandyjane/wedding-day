@@ -263,6 +263,23 @@
       margin: 12px 0 5px;
     }
     .section-label:first-of-type { margin-top: 2px; }
+    .section-count {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-style: normal;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--ink-faint);
+      background: var(--rose-light);
+      border-radius: 10px;
+      padding: 1px 7px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .section-count.complete {
+      color: var(--sage-dark);
+      background: rgba(168,184,159,0.18);
+    }
 
     /* ── Items ── */
     .item {
@@ -767,9 +784,9 @@ const DEFAULT_DATA = {
           name: 'Appointments',
           items: [
             { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct · 10:00 AM', checked: false },
+            { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct · 8:00 AM', checked: false },
             { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
             { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
-            { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct · 8:00 AM', checked: false },
           ]
         },
         {
@@ -1103,6 +1120,40 @@ try {
 let hideDone = false;
 try { hideDone = localStorage.getItem('wedding-hide-done') === '1'; } catch (e) {}
 
+// Parse a "Monday 12th Oct · 9:00 AM"-style note into a sortable timestamp.
+function noteToTime(note) {
+  if (!note) return Infinity; // items with no date sort to the end
+  const months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+  const dm = note.match(/(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]{3})/);
+  if (!dm) return Infinity;
+  const day = parseInt(dm[1], 10);
+  const mon = months[dm[2].slice(0,3).toLowerCase()];
+  if (mon === undefined) return Infinity;
+  let hour = 0, min = 0;
+  const tm = note.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+  if (tm) {
+    hour = parseInt(tm[1], 10);
+    min = parseInt(tm[2], 10);
+    const ap = (tm[3] || '').toUpperCase();
+    if (ap === 'PM' && hour < 12) hour += 12;
+    if (ap === 'AM' && hour === 12) hour = 0;
+  }
+  // Year is irrelevant for relative ordering within the list; use 2026
+  return new Date(2026, mon, day, hour, min).getTime();
+}
+// Stable sort a list of items by their date/time note (undated items keep order at the end).
+function sortByDateNote(items) {
+  const sorted = items
+    .map((it, i) => ({ it, i }))
+    .sort((a, b) => {
+      const ta = noteToTime(a.it.note), tb = noteToTime(b.it.note);
+      return ta !== tb ? ta - tb : a.i - b.i;
+    })
+    .map(p => p.it);
+  items.length = 0;
+  sorted.forEach(it => items.push(it));
+}
+
 // ── One-off migrations: add new built-in sections to already-saved data ────────
 // (preserves everything the user has already added or checked off)
 (function migrate() {
@@ -1128,6 +1179,8 @@ try { hideDone = localStorage.getItem('wedding-hide-done') === '1'; } catch (e) 
         if (ap1 && ap1.note === 'Sunday 11th Oct') ap1.note = 'Sunday 11th Oct · 10:00 AM';
         const ap4 = appts.items.find(i => i.id === 'ap4');
         if (ap4 && ap4.note === 'Monday 12th Oct') ap4.note = 'Monday 12th Oct · 8:00 AM';
+        // Sort appointments chronologically by their date/time note
+        sortByDateNote(appts.items);
       }
       // Ensure Appointments sits above House clean
       const ai = week.sections.findIndex(s => s.id === 's-week-appts');
@@ -1316,6 +1369,7 @@ function renderTabs() {
 // ── Render content ────────────────────────────────────────────────────────────
 function renderContent() {
   const content = document.getElementById('content');
+  const scrollPos = content.scrollTop; // preserve scroll across re-render
   const list = getList(data.activeList);
   if (!list) { content.innerHTML = ''; return; }
 
@@ -1341,6 +1395,15 @@ function renderContent() {
     const label = document.createElement('div');
     label.className = 'section-label';
     label.textContent = section.name;
+
+    const done = section.items.filter(i => i.checked).length;
+    const total = section.items.length;
+    if (total > 0) {
+      const count = document.createElement('span');
+      count.className = 'section-count' + (done === total ? ' complete' : '');
+      count.textContent = done + '/' + total;
+      label.appendChild(count);
+    }
     labelRow.appendChild(label);
 
     const sectionActions = document.createElement('div');
@@ -1399,6 +1462,8 @@ function renderContent() {
   addSectionRow.addEventListener('click', () => openSectionSheet(list.id));
   addSectionRow.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSectionSheet(list.id); });
   content.appendChild(addSectionRow);
+
+  content.scrollTop = scrollPos; // restore scroll position
 }
 
 // ── Build item element ────────────────────────────────────────────────────────
@@ -1418,6 +1483,7 @@ function buildItemEl(listId, sectionId, item) {
     textEl.className = 'item-text' + (item.checked ? ' checked' : '');
     save();
     updateProgress(getList(listId));
+    renderContent(); // keep section counts in sync (and hide/show when filtering)
   });
 
   const body = document.createElement('div');
