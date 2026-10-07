@@ -753,6 +753,7 @@ const DEFAULT_DATA = {
             { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct', checked: false },
             { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
             { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
+            { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct', checked: false },
           ]
         }
       ]
@@ -1078,6 +1079,11 @@ try {
           if (defSec) week.sections.push(JSON.parse(JSON.stringify(defSec)));
         }
       });
+      // Add "Call Skytower" to Appointments if missing
+      const appts = week.sections.find(s => s.id === 's-week-appts');
+      if (appts && !appts.items.some(i => i.id === 'ap4')) {
+        appts.items.push({ id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct', checked: false });
+      }
     }
     // Add "Boutonniere for Dad" to Bride's Gifts & keepsakes
     const bride = data.lists && data.lists.find(l => l.id === 'bride');
