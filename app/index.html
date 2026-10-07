@@ -787,6 +787,7 @@ const DEFAULT_DATA = {
             { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct · 8:00 AM', checked: false },
             { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
             { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
+            { id: 'ap7', text: 'Wedding ceremony rehearsal', note: 'Tuesday 13th Oct · 4:00 PM — Bring welcome sign & boxes up items', checked: false },
           ]
         },
         {
@@ -1189,6 +1190,10 @@ function sortByDateNote(items) {
         if (ap4 && ap4.note === 'Monday 12th Oct') ap4.note = 'Monday 12th Oct · 8:00 AM';
         // Meals were briefly filed under Appointments — remove those ids from here
         appts.items = appts.items.filter(i => i.id !== 'ap5' && i.id !== 'ap6');
+        // Add "Wedding ceremony rehearsal" if missing
+        if (!appts.items.some(i => i.id === 'ap7')) {
+          appts.items.push({ id: 'ap7', text: 'Wedding ceremony rehearsal', note: 'Tuesday 13th Oct · 4:00 PM — Bring welcome sign & boxes up items', checked: false });
+        }
         // Sort appointments chronologically by their date/time note
         sortByDateNote(appts.items);
       }
