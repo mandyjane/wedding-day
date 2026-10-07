@@ -803,6 +803,7 @@ const DEFAULT_DATA = {
           name: 'Gifts & keepsakes',
           items: [
             { id: 'g1', text: 'Bridesmaid & flower girl gift bags', note: '', checked: false },
+            { id: 'g2', text: 'Boutonniere for Dad', note: '', checked: false },
           ]
         },
         {
@@ -1037,6 +1038,7 @@ try {
 // (preserves everything the user has already added or checked off)
 (function migrate() {
   try {
+    // Add "House clean" section to This week
     const week = data.lists && data.lists.find(l => l.id === 'week');
     if (week && !week.sections.some(s => s.id === 's-week-clean')) {
       const def = DEFAULT_DATA.lists.find(l => l.id === 'week');
@@ -1044,6 +1046,12 @@ try {
       if (defClean) {
         week.sections.push(JSON.parse(JSON.stringify(defClean)));
       }
+    }
+    // Add "Boutonniere for Dad" to Bride's Gifts & keepsakes
+    const bride = data.lists && data.lists.find(l => l.id === 'bride');
+    const gifts = bride && bride.sections.find(s => s.id === 's-bride-gifts');
+    if (gifts && !gifts.items.some(i => i.id === 'g2')) {
+      gifts.items.push({ id: 'g2', text: 'Boutonniere for Dad', note: '', checked: false });
     }
   } catch (e) {}
 })();
