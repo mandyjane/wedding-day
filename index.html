@@ -1660,9 +1660,17 @@ renderContent();
   }, { passive: true });
 })();
 
-// Service worker registration
+// Service worker — unregister any SW not scoped to /wedding-day/, then register ours
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
+    try {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for (const reg of regs) {
+        if (reg.scope && !reg.scope.includes('/wedding-day/')) {
+          await reg.unregister();
+        }
+      }
+    } catch(e) {}
     navigator.serviceWorker.register('./sw.js', { scope: '/wedding-day/' }).catch(() => {});
   });
 }
