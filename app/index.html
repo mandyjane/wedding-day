@@ -1026,6 +1026,15 @@ const DEFAULT_DATA = {
             { id: 'dc26', text: '1 × Glass wishing well', note: '', checked: false },
             { id: 'dc27', text: '1 × Cardboard backup cards and gift box', note: '', checked: false },
           ]
+        },
+        {
+          id: 's-livestream',
+          name: 'Livestream',
+          items: [
+            { id: 'dc29', text: 'Tripod', note: '', checked: false },
+            { id: 'dc30', text: 'Samsung Galaxy S23 Ultra', note: '', checked: false },
+            { id: 'dc31', text: 'Microphones', note: '', checked: false },
+          ]
         }
       ]
     },
@@ -1258,6 +1267,12 @@ function sortByDateNote(items) {
       const dCeremony = decor.sections.find(s => s.id === 's-ceremony');
       if (dCeremony && !dCeremony.items.some(i => i.id === 'dc28')) {
         dCeremony.items.push(basket || { id: 'dc28', text: '3 × Flower girl baskets', note: '', checked: false });
+      }
+      // Add Livestream section if missing
+      if (!decor.sections.some(s => s.id === 's-livestream')) {
+        const defDecor = DEFAULT_DATA.lists.find(l => l.id === 'decor');
+        const defLive = defDecor && defDecor.sections.find(s => s.id === 's-livestream');
+        if (defLive) decor.sections.push(JSON.parse(JSON.stringify(defLive)));
       }
     }
     // Add new To do items to This week
