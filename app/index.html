@@ -693,6 +693,24 @@ const DEFAULT_DATA = {
             { id: 'w2', text: 'Take cans to Containers for Change', note: '', checked: false },
             { id: 'w3', text: 'Make spare bed', note: '', checked: false },
           ]
+        },
+        {
+          id: 's-week-clean',
+          name: 'House clean',
+          items: [
+            { id: 'hc1', text: 'Ceiling fans', note: '', checked: false },
+            { id: 'hc2', text: 'Dust above door and window frames', note: '', checked: false },
+            { id: 'hc3', text: 'Dust all shelves and window sills', note: '', checked: false },
+            { id: 'hc4', text: 'Vacuum couch (inc. under cushions)', note: '', checked: false },
+            { id: 'hc5', text: 'Jiff kitchen sink', note: '', checked: false },
+            { id: 'hc6', text: 'Clean window and door tracks', note: '', checked: false },
+            { id: 'hc7', text: 'Dust and wipe skirtings', note: '', checked: false },
+            { id: 'hc8', text: 'Clean toilet', note: '', checked: false },
+            { id: 'hc9', text: 'Clean bathroom', note: '', checked: false },
+            { id: 'hc10', text: 'Vacuum floor', note: '', checked: false },
+            { id: 'hc11', text: 'Mop floor', note: '', checked: false },
+            { id: 'hc12', text: 'Windex windows and mirrors', note: '', checked: false },
+          ]
         }
       ]
     },
@@ -1014,6 +1032,21 @@ try {
 } catch (e) {
   data = JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
+
+// ── One-off migrations: add new built-in sections to already-saved data ────────
+// (preserves everything the user has already added or checked off)
+(function migrate() {
+  try {
+    const week = data.lists && data.lists.find(l => l.id === 'week');
+    if (week && !week.sections.some(s => s.id === 's-week-clean')) {
+      const def = DEFAULT_DATA.lists.find(l => l.id === 'week');
+      const defClean = def && def.sections.find(s => s.id === 's-week-clean');
+      if (defClean) {
+        week.sections.push(JSON.parse(JSON.stringify(defClean)));
+      }
+    }
+  } catch (e) {}
+})();
 
 function save() {
   try { localStorage.setItem('wedding-checklist-v2', JSON.stringify(data)); } catch(e) {}
