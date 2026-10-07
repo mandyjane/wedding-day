@@ -774,19 +774,6 @@ const DEFAULT_DATA = {
           ]
         },
         {
-          id: 's-bride-emergency',
-          name: 'Emergency kit',
-          items: [
-            { id: 'k1', text: 'Straws', note: '', checked: false },
-            { id: 'k2', text: 'Band aids', note: '', checked: false },
-            { id: 'k3', text: 'Booby tape', note: '', checked: false },
-            { id: 'k4', text: 'Eyelash glue', note: '', checked: false },
-            { id: 'k5', text: 'Scissors', note: '', checked: false },
-            { id: 'k6', text: 'Safety pins', note: '', checked: false },
-            { id: 'k7', text: 'Clear hair ties', note: '', checked: false },
-          ]
-        },
-        {
           id: 's-bride-snacks',
           name: 'Snacks & supplies',
           items: [
@@ -1052,6 +1039,10 @@ try {
     const gifts = bride && bride.sections.find(s => s.id === 's-bride-gifts');
     if (gifts && !gifts.items.some(i => i.id === 'g2')) {
       gifts.items.push({ id: 'g2', text: 'Boutonniere for Dad', note: '', checked: false });
+    }
+    // Remove the "Emergency kit" section from Bride's list
+    if (bride) {
+      bride.sections = bride.sections.filter(s => s.id !== 's-bride-emergency');
     }
   } catch (e) {}
 })();
