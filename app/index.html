@@ -830,7 +830,7 @@ const DEFAULT_DATA = {
           id: 's-groom-florals',
           name: 'Florals',
           items: [
-            { id: 'i5', text: 'Boutonniere', note: '', checked: false },
+            { id: 'i5', text: 'Boutonniere', note: 'Pin to your left side. One each for you and your groomsmen.', checked: false },
             { id: 'i6', text: "Boutonniere for Dad", note: '', checked: false },
           ]
         }
@@ -1050,6 +1050,13 @@ try {
     const weekTodo = week && week.sections.find(s => s.id === 's-week');
     if (weekTodo && !weekTodo.items.some(i => i.id === 'w4')) {
       weekTodo.items.push({ id: 'w4', text: 'Bath Leo', note: '', checked: false });
+    }
+    // Add note to Groom's Boutonniere if it has none yet
+    const groom = data.lists && data.lists.find(l => l.id === 'groom');
+    const gFlorals = groom && groom.sections.find(s => s.id === 's-groom-florals');
+    const bout = gFlorals && gFlorals.items.find(i => i.id === 'i5');
+    if (bout && !bout.note) {
+      bout.note = 'Pin to your left side. One each for you and your groomsmen.';
     }
   } catch (e) {}
 })();
