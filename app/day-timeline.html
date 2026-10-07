@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Wedding Day Timeline · L & A</title>
+<meta name="theme-color" content="#FAF8F5" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #FAF8F5;
+    --card:      #FFFFFF;
+    --ink:       #3D3330;
+    --ink-muted: #8C7D7C;
+    --ink-faint: #B89FA0;
+    --rose:      #C8A9A7;
+    --rose-dark: #8C6B69;
+    --rose-soft: #F3EAE9;
+    --sage:      #A8B89F;
+    --sage-dark: #7A9170;
+    --sage-soft: #ECF0E8;
+    --gold:      #B79A6B;
+    --gold-soft: #F3ECDD;
+    --rule:      #EDE3E2;
+    --font-serif: 'EB Garamond', Georgia, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1917; --card: #262220; --ink: #ede6e2; --ink-muted: #a2938f;
+      --ink-faint: #7d6b69; --rose: #c49a98; --rose-dark: #d9b3b1; --rose-soft: #2e2320;
+      --sage: #9fb094; --sage-dark: #b8c7ad; --sage-soft: #222a1f; --gold: #c4a874;
+      --gold-soft: #2b2518; --rule: #352f2c; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1917; --card: #262220; --ink: #ede6e2; --ink-muted: #a2938f;
+    --ink-faint: #7d6b69; --rose: #c49a98; --rose-dark: #d9b3b1; --rose-soft: #2e2320;
+    --sage: #9fb094; --sage-dark: #b8c7ad; --sage-soft: #222a1f; --gold: #c4a874;
+    --gold-soft: #2b2518; --rule: #352f2c; color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    padding: calc(28px + var(--safe-top)) 16px calc(48px + var(--safe-bottom));
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 540px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .header { text-align: center; margin-bottom: 26px; }
+  .eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+  }
+  .title {
+    font-family: var(--font-serif); font-size: clamp(30px, 9vw, 42px);
+    font-weight: 400; font-style: italic; line-height: 1.05; margin-bottom: 6px;
+  }
+  .sub { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.04em; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; color: var(--rose-dark); text-decoration: none;
+    margin-bottom: 20px; border: 0.5px solid var(--rose); border-radius: 16px;
+    padding: 5px 13px; background: transparent;
+  }
+
+  /* ── Phase heading ── */
+  .phase {
+    display: flex; align-items: center; gap: 9px;
+    margin: 26px 0 10px; padding: 7px 13px;
+    border-radius: 9px;
+  }
+  .phase.prep { background: var(--sage-soft); }
+  .phase.event { background: var(--rose-soft); }
+  .phase-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .phase.prep .phase-dot { background: var(--sage-dark); }
+  .phase.event .phase-dot { background: var(--rose); }
+  .phase-name {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .phase.prep .phase-name { color: var(--sage-dark); }
+  .phase.event .phase-name { color: var(--rose-dark); }
+  .phase-note {
+    margin-left: auto; font-size: 10px; color: var(--ink-faint);
+    white-space: nowrap; letter-spacing: 0.02em;
+  }
+
+  /* ── Timeline items ── */
+  .row {
+    display: grid;
+    grid-template-columns: 62px 16px 1fr;
+    gap: 0 10px;
+  }
+  .row-time {
+    text-align: right; padding: 3px 0 10px;
+    font-size: 12px; font-weight: 600; color: var(--ink-muted);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+    line-height: 1.3;
+  }
+  .row-rail { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .row-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    margin-top: 6px; flex-shrink: 0; border: 1.5px solid var(--bg);
+    background: var(--rose); z-index: 1;
+  }
+  .row.sage .row-dot { background: var(--sage-dark); }
+  .row.gold .row-dot { background: var(--gold); }
+  .row-line { width: 1.5px; flex: 1; background: var(--rule); margin-top: 1px; }
+  .row:last-child .row-line { display: none; }
+
+  .row-body { padding: 1px 0 14px; min-width: 0; }
+  .row-title {
+    font-size: 14px; font-weight: 500; color: var(--ink);
+    line-height: 1.3;
+  }
+  .row-detail {
+    font-size: 12px; color: var(--ink-muted); margin-top: 2px; line-height: 1.45;
+  }
+  .tag {
+    display: inline-block; font-size: 9px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 1px 7px; border-radius: 10px; margin-left: 7px;
+    vertical-align: middle; position: relative; top: -1px;
+  }
+  .tag.you { background: var(--rose-soft); color: var(--rose-dark); }
+  .tag.liam { background: var(--sage-soft); color: var(--sage-dark); }
+  .tag.vendor { background: var(--gold-soft); color: var(--gold); }
+
+  /* ── Highlight (key moments) ── */
+  .row.key .row-body {
+    background: var(--gold-soft); border-left: 2.5px solid var(--gold);
+    border-radius: 0 8px 8px 0; padding: 8px 11px; margin-bottom: 6px;
+  }
+  .row.key .row-dot {
+    width: 11px; height: 11px; margin-top: 5px;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--gold);
+    background: var(--gold); border: none;
+  }
+  .row.key .row-title {
+    font-family: var(--font-serif); font-size: 17px; font-weight: 500; font-style: italic;
+  }
+
+  /* ── Vendor links ── */
+  .links {
+    margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .links-head {
+    font-family: var(--font-serif); font-size: 15px; font-style: italic;
+    color: var(--ink); margin-bottom: 2px;
+  }
+  .link-card {
+    display: flex; align-items: center; gap: 11px;
+    padding: 12px 14px; border-radius: 10px;
+    background: var(--card); border: 0.5px solid var(--rule);
+    text-decoration: none; color: var(--ink);
+  }
+  .link-icon { font-size: 18px; flex-shrink: 0; }
+  .link-text { flex: 1; min-width: 0; }
+  .link-title { font-size: 13.5px; font-weight: 500; }
+  .link-sub { font-size: 11px; color: var(--ink-muted); margin-top: 1px; }
+  .link-arrow { color: var(--ink-faint); font-size: 16px; }
+
+  .footer {
+    text-align: center; margin-top: 28px; font-size: 11px;
+    color: var(--ink-faint); letter-spacing: 0.04em;
+    font-family: var(--font-serif); font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back-link" href="index.html">← Back to checklists</a>
+
+  <div class="header">
+    <div class="eyebrow">14 October 2026 · Hillstone St Lucia</div>
+    <h1 class="title">The Wedding Day</h1>
+    <div class="sub">Full timeline — morning prep to last dance</div>
+  </div>
+
+  <!-- ══════════ MORNING & PREP ══════════ -->
+  <div class="phase prep">
+    <span class="phase-dot"></span>
+    <span class="phase-name">Morning &amp; Getting Ready</span>
+    <span class="phase-note">Cllix Skytower, CBD</span>
+  </div>
+
+  <div class="row sage">
+    <div class="row-time">9:00 AM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Liam drops off florals to Hillstone<span class="tag liam">Liam</span></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">10:15 AM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Hair &amp; makeup begins</div>
+      <div class="row-detail">Sophy &amp; Milly — flower girls first, then bridesmaid &amp; bride. Runs to ~1:45 PM.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">12:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Photographer — Groom's prep<span class="tag vendor">Photo</span></div>
+      <div class="row-detail">Arrives Goodna for final suit-up &amp; detail shots, then travels to the CBD.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">1:15 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Mandy's hair &amp; makeup done</div>
+      <div class="row-detail">Getting dressed — bridesmaids assist with dress, buttons &amp; bustle.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">1:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Photographer — Bride's prep<span class="tag vendor">Photo</span></div>
+      <div class="row-detail">Dress-on sequence, detail shots, bride &amp; bridal party portraits (1:45–2:45).</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">2:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Zane arrives at Hillstone for set up<span class="tag vendor">Music</span></div>
+      <div class="row-detail">Live musician — sets up ahead of cocktail hour.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">2:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Livestream manager arrives<span class="tag vendor">Stream</span></div>
+      <div class="row-detail">Scout camera position behind celebrant, set up EventLive (go live 3:45).</div>
+    </div>
+  </div>
+
+  <!-- ══════════ AT THE VENUE ══════════ -->
+  <div class="phase event">
+    <span class="phase-dot"></span>
+    <span class="phase-name">At the Venue</span>
+    <span class="phase-note">Hillstone St Lucia</span>
+  </div>
+
+  <div class="row">
+    <div class="row-time">3:15 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Photographer arrives at Hillstone<span class="tag vendor">Photo</span></div>
+      <div class="row-detail">Venue, floral &amp; detail shots. Bride arrives ~3:45.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">3:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Guest arrival</div>
+      <div class="row-detail">Guests seated via QR seating guide, groomsmen ushering.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">3:45 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Livestream goes live<span class="tag vendor">Stream</span></div>
+      <div class="row-detail">EventLive — evt.live/liam-amanda. Melbourne guests watch at 5:00 PM AEDT.</div>
+    </div>
+  </div>
+
+  <div class="row key gold">
+    <div class="row-time">4:00 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Ceremony</div>
+      <div class="row-detail">Courtyard garden. Processional, vows, rings, first kiss, recessional. ~20–25 min.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">4:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Family &amp; friends group photos</div>
+      <div class="row-detail">Formal group combinations in the courtyard (full call list with photographer).</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">5:00 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Cocktail hour</div>
+      <div class="row-detail">Beverages, canapés &amp; live music by Zane Taylor in the Library Bar, while the wedding party departs for photos on the golf course (golden hour ~5:15–6:00).</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">6:00 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Reception begins</div>
+      <div class="row-detail">Guests move upstairs to the Rosewood Room.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">6:15 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Wedding party returns</div>
+      <div class="row-detail">Welcoming words &amp; formal introduction of the wedding party.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">6:35 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Entrée served</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">7:05 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Speeches</div>
+      <div class="row-detail">Father of the Bride, Father of the Groom &amp; the Newlyweds.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">7:25 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Main course served</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">7:55 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Speeches</div>
+      <div class="row-detail">Maid of Honour &amp; Best Man.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">8:10 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Cutting of the cake</div>
+    </div>
+  </div>
+
+  <div class="row key gold">
+    <div class="row-time">8:20 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">First dance</div>
+      <div class="row-detail">Guests move downstairs to the Library Bar for the newlywed first dance.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">8:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Cake served &amp; live music</div>
+      <div class="row-detail">Cake served buffet style with tea &amp; coffee. Zane back on guitar with favourite classics.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">10:00 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Beverage package concludes</div>
+      <div class="row-detail">Cash bar available.</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-time">11:00 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Last drinks called</div>
+    </div>
+  </div>
+
+  <div class="row key gold">
+    <div class="row-time">11:30 PM</div>
+    <div class="row-rail"><span class="row-dot"></span><span class="row-line"></span></div>
+    <div class="row-body">
+      <div class="row-title">Reception closes</div>
+    </div>
+  </div>
+
+  <!-- ══════════ Linked run sheets ══════════ -->
+  <div class="links">
+    <div class="links-head">Detailed run sheets</div>
+    <a class="link-card" href="timeline.html">
+      <span class="link-icon">💄</span>
+      <span class="link-text">
+        <span class="link-title">Hair &amp; Makeup Schedule</span>
+        <span class="link-sub">Sophy &amp; Milly · 10:15 AM – 1:45 PM</span>
+      </span>
+      <span class="link-arrow">→</span>
+    </a>
+    <a class="link-card" href="photography.html">
+      <span class="link-icon">📸</span>
+      <span class="link-text">
+        <span class="link-title">Photography Schedule</span>
+        <span class="link-sub">8-hour coverage · 12:30 PM – 8:30 PM</span>
+      </span>
+      <span class="link-arrow">→</span>
+    </a>
+    <a class="link-card" href="livestream-runsheet.pdf">
+      <span class="link-icon">📡</span>
+      <span class="link-text">
+        <span class="link-title">Livestream Run Sheet</span>
+        <span class="link-sub">Stream manager · EventLive setup (PDF)</span>
+      </span>
+      <span class="link-arrow">→</span>
+    </a>
+  </div>
+
+  <div class="footer">Amanda &amp; Liam · 14 October 2026 · Hillstone St Lucia</div>
+
+</div>
+</body>
+</html>

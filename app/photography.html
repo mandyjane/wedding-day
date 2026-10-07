@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photography Schedule – Amanda & Liam – 14 October 2026</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 10pt;
+    color: #2a2420;
+    background: #ffffff;
+    line-height: 1.5;
+  }
+
+  /* ── PAGE SETUP ── */
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+
+  @media print {
+    body { font-size: 9.5pt; }
+    .no-print { display: none !important; }
+    .page-break { page-break-before: always; }
+    .section-block { page-break-inside: avoid; }
+    .entry { page-break-inside: avoid; }
+  }
+
+  /* ── SCREEN WRAPPER ── */
+  .page-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+  }
+
+  @media print {
+    .page-wrap { max-width: 100%; padding: 0; }
+  }
+
+  /* ── PRINT BUTTON (screen only) ── */
+  .print-bar {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .print-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background: #8a6a50;
+    color: #fff;
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 10pt;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .print-btn:hover { background: #6b5240; }
+
+  /* ── HEADER ── */
+  .doc-header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1.5px solid #c4a98c;
+    margin-bottom: 28px;
+  }
+  .doc-header .label {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a6a50;
+    margin-bottom: 6px;
+  }
+  .doc-header h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 28pt;
+    font-weight: 600;
+    color: #2a2420;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .doc-header .date {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 13pt;
+    font-style: italic;
+    color: #7a6f6a;
+    margin-bottom: 10px;
+  }
+  .doc-header .meta-row {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .doc-header .meta-item {
+    font-size: 8.5pt;
+    color: #5a5050;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .doc-header .meta-item span.icon {
+    font-size: 10pt;
+    color: #8a6a50;
+  }
+  .doc-header .coverage-pill {
+    display: inline-block;
+    background: #f5f0ea;
+    border: 1px solid #ddd5cc;
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: 8pt;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #6b5240;
+    margin-top: 10px;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  .section-block {
+    margin-bottom: 4px;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 12px 7px 10px;
+    margin-bottom: 6px;
+    border-radius: 3px;
+  }
+
+  .section-heading .section-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .section-heading .section-label {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-heading .section-duration {
+    margin-left: auto;
+    font-size: 7.5pt;
+    font-weight: 400;
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  .sh-groom   { background: #f0f4f1; }
+  .sh-bride   { background: #f5f0f3; }
+  .sh-venue   { background: #eff3f6; }
+  .sh-ceremony{ background: #f4f1ee; }
+  .sh-groups  { background: #f0f4f1; }
+  .sh-golf    { background: #eff3f6; }
+  .sh-recep   { background: #f5f0f3; }
+
+  .dot-groom    { background: #6b8f71; }
+  .dot-bride    { background: #a87c8c; }
+  .dot-venue    { background: #5a7a9a; }
+  .dot-ceremony { background: #8a6a50; }
+  .dot-groups   { background: #6b8f71; }
+  .dot-golf     { background: #5a7a9a; }
+  .dot-recep    { background: #a87c8c; }
+
+  .label-groom    { color: #4a6b50; }
+  .label-bride    { color: #7a5a6a; }
+  .label-venue    { color: #3a5a7a; }
+  .label-ceremony { color: #6a4a30; }
+  .label-groups   { color: #4a6b50; }
+  .label-golf     { color: #3a5a7a; }
+  .label-recep    { color: #7a5a6a; }
+
+  /* ── TIMELINE ENTRIES ── */
+  .timeline {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .entry {
+    display: table-row;
+  }
+
+  .entry-time {
+    display: table-cell;
+    width: 68px;
+    padding: 5px 10px 5px 0;
+    vertical-align: top;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .entry-time .time-main {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #5a5050;
+    display: block;
+  }
+  .entry-time .time-end {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 7.5pt;
+    font-weight: 400;
+    color: #9a8f8a;
+    display: block;
+  }
+
+  .entry-connector {
+    display: table-cell;
+    width: 18px;
+    padding: 0;
+    vertical-align: top;
+    position: relative;
+  }
+
+  .connector-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    min-height: 36px;
+  }
+
+  .entry-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .entry-dot-highlight {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px currentColor;
+  }
+
+  .entry-rail {
+    width: 1.5px;
+    flex-grow: 1;
+    background: #ddd5cc;
+    margin-top: 2px;
+  }
+
+  .entry-content {
+    display: table-cell;
+    padding: 4px 0 10px 12px;
+    vertical-align: top;
+  }
+
+  /* Normal entry */
+  .entry-title {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 9.5pt;
+    font-weight: 500;
+    color: #2a2420;
+    margin-bottom: 2px;
+  }
+
+  .entry-desc {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 8.5pt;
+    color: #6a5f5a;
+    line-height: 1.5;
+  }
+
+  /* Highlight entry (ceremony, first dance, golf) */
+  .entry-highlight .entry-content-inner {
+    background: #faf7f3;
+    border-left: 2.5px solid #c4a98c;
+    border-radius: 0 3px 3px 0;
+    padding: 7px 10px 8px 12px;
+  }
+
+  .entry-highlight .entry-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 12pt;
+    font-weight: 600;
+    color: #2a2420;
+  }
+
+  .entry-highlight .entry-desc {
+    font-size: 8.5pt;
+    color: #6a5f5a;
+  }
+
+  /* Travel entry */
+  .entry-travel .entry-content-inner {
+    background: #f5f2ee;
+    border-radius: 3px;
+    padding: 5px 10px;
+    display: inline-block;
+    min-width: 200px;
+  }
+
+  .entry-travel .entry-title {
+    font-size: 8.5pt;
+    font-weight: 500;
+    color: #7a6f6a;
+  }
+
+  /* Shot list */
+  .shot-list {
+    margin-top: 5px;
+    padding: 8px 10px;
+    background: #f8f6f3;
+    border: 1px solid #e8e0d8;
+    border-radius: 3px;
+  }
+  .shot-list-title {
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8a6a50;
+    margin-bottom: 5px;
+  }
+  .shot-list-note {
+    font-size: 8pt;
+    color: #7a6f6a;
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+  .shot-list ol {
+    padding-left: 16px;
+    margin: 0;
+  }
+  .shot-list ol li {
+    font-size: 8.5pt;
+    color: #3a3430;
+    line-height: 1.6;
+    padding-left: 2px;
+  }
+
+  /* Hour badge */
+  .hour-badge {
+    display: inline-block;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #f0ebe4;
+    color: #8a6a50;
+    border-radius: 2px;
+    padding: 1px 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: #e8e0d8;
+    margin: 8px 0 14px 0;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid #ddd5cc;
+  }
+  .doc-footer .footer-heading {
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8a6a50;
+    margin-bottom: 6px;
+  }
+  .doc-footer p {
+    font-size: 8pt;
+    color: #6a5f5a;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  /* ── COVERAGE SUMMARY BAR ── */
+  .coverage-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f5f0ea;
+    border: 1px solid #e0d4c4;
+    border-radius: 4px;
+    padding: 9px 14px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .coverage-bar .cb-item {
+    font-size: 8.5pt;
+    color: #5a4a40;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .coverage-bar .cb-item strong {
+    font-weight: 600;
+    color: #2a2420;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Print button (screen only) -->
+  <div class="print-bar no-print">
+    <button class="print-btn" onclick="window.print()">⎙ Print / Save as PDF</button>
+  </div>
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="label">Photography Schedule</div>
+    <h1>Amanda &amp; Liam</h1>
+    <div class="date">14 October 2026 &nbsp;·&nbsp; Hillstone St Lucia</div>
+
+    <div class="meta-row">
+      <div class="meta-item"><span class="icon">📍</span> Groom: Goodna</div>
+      <div class="meta-item"><span class="icon">📍</span> Bride: Cllix Skytower, Brisbane CBD</div>
+      <div class="meta-item"><span class="icon">📍</span> Venue: Hillstone St Lucia</div>
+    </div>
+    <div class="coverage-pill">⏱ 8-hour coverage &nbsp;·&nbsp; 12:30pm – 8:30pm</div>
+  </div>
+
+  <!-- Coverage summary -->
+  <div class="coverage-bar">
+    <div class="cb-item"><strong>Start</strong> 12:30pm</div>
+    <div class="cb-item"><strong>Ceremony</strong> 4:00pm</div>
+    <div class="cb-item"><strong>First Dance</strong> 8:20pm</div>
+    <div class="cb-item"><strong>End</strong> ~8:30pm</div>
+  </div>
+
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION: GROOM PREPARATIONS     -->
+  <!-- ════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-heading sh-groom">
+      <div class="section-dot dot-groom"></div>
+      <div class="section-label label-groom">Groom Preparations · Goodna</div>
+      <div class="section-duration">30 min</div>
+    </div>
+
+    <div class="timeline">
+      <!-- 12:30pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">12:30pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-groom"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Photographer Arrives — Groom's Home <span class="hour-badge">1st Hour</span></div>
+          <div class="entry-desc">14 Simpson Crt, Goodna. Arrives at the end of getting ready — final suit-up, detail shots (rings, buttonholes), last candid moments with groomsmen before heading out.</div>
+        </div>
+      </div>
+
+      <!-- 1:00pm travel -->
+      <div class="entry entry-travel">
+        <div class="entry-time">
+          <span class="time-main">1:00pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-groom"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-content-inner">
+            <div class="entry-title">🚗 Travel to Cllix Skytower Brisbane CBD — approx. 25 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION: BRIDE PREPARATIONS     -->
+  <!-- ════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-heading sh-bride">
+      <div class="section-dot dot-bride"></div>
+      <div class="section-label label-bride">Bride Preparations · Cllix Skytower, Brisbane CBD</div>
+      <div class="section-duration">1.25 hrs</div>
+    </div>
+
+    <div class="timeline">
+      <!-- 1:30pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">1:30pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-bride"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Photographer Arrives — Bride's Location <span class="hour-badge">2nd Hour</span></div>
+          <div class="entry-desc">Cllix Skytower, 222 Margaret St, Brisbane CBD. Arrives just before hair &amp; makeup wraps — final touches, candids with bridesmaids and flower girls as the excitement builds.</div>
+        </div>
+      </div>
+
+      <!-- 1:45pm -->
+      <div class="entry entry-highlight">
+        <div class="entry-time">
+          <span class="time-main">1:45pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-bride" style="width:11px;height:11px;margin-top:6px;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #a87c8c;"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-content-inner">
+            <div class="entry-title">Hair &amp; Makeup Complete</div>
+            <div class="entry-desc">Dress-on sequence. Bridesmaids assist. Detail shots — bouquet, jewellery, shoes, veil. Bride portraits and bridal party group shots.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1:45–2:20pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">1:45pm</span>
+          <span class="time-end">–2:45pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-bride"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Bride Portraits &amp; Bridal Party</div>
+          <div class="entry-desc">Bride solo portraits, bridesmaids and flower girls group shots. A relaxed window for beautiful images before heading to the venue.</div>
+        </div>
+      </div>
+
+      <!-- 2:55pm travel -->
+      <div class="entry entry-travel">
+        <div class="entry-time">
+          <span class="time-main">2:55pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-bride"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-content-inner">
+            <div class="entry-title">🚗 Travel to Hillstone St Lucia — approx. 20 min from CBD <span class="hour-badge">3rd Hour</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION: VENUE ARRIVAL          -->
+  <!-- ════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-heading sh-venue">
+      <div class="section-dot dot-venue"></div>
+      <div class="section-label label-venue">Venue Arrival · Hillstone St Lucia</div>
+      <div class="section-duration">30 min</div>
+    </div>
+
+    <div class="timeline">
+      <!-- 3:15pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">3:15pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-venue"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Photographer Arrives at Hillstone</div>
+          <div class="entry-desc">Venue and detail shots — courtyard garden setup, floral centrepieces, table details, signage, Rosewood Room, Library Bar.</div>
+        </div>
+      </div>
+
+      <!-- 3:00–3:45pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">3:30pm</span>
+          <span class="time-end">–3:45pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-venue"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Guest Arrivals &amp; Pre-Ceremony <span class="hour-badge">4th Hour</span></div>
+          <div class="entry-desc">Candid arrival shots, guests finding seats via QR seating guide, groomsmen ushering. Groom and groomsmen final portraits in garden.</div>
+        </div>
+      </div>
+
+      <!-- 3:45pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">3:45pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-venue"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Bride Arrives at Hillstone</div>
+          <div class="entry-desc">Capture bride's arrival. Final moments with bridesmaids before the processional. Flower girls readied.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION: CEREMONY               -->
+  <!-- ════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-heading sh-ceremony">
+      <div class="section-dot dot-ceremony"></div>
+      <div class="section-label label-ceremony">Ceremony · Courtyard Garden</div>
+      <div class="section-duration">~ 25 min</div>
+    </div>
+
+    <div class="timeline">
+      <!-- 4:00pm highlight -->
+      <div class="entry entry-highlight">
+        <div class="entry-time">
+          <span class="time-main">4:00pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-ceremony" style="width:11px;height:11px;margin-top:6px;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #8a6a50;"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-content-inner">
+            <div class="entry-title">✦ Wedding Ceremony Begins</div>
+            <div class="entry-desc">Processional, vows, ring exchange, first kiss, recessional. Photographer covers the full ceremony — both candid and formal moments.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4:00–4:25pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">4:00pm</span>
+          <span class="time-end">–4:25pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-ceremony"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Ceremony Coverage</div>
+          <div class="entry-desc">Approx. 20–25 min ceremony. Guest reactions, flower girl moments, signing of register. Confetti throw and dip kiss during the recessional.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION: GROUP PHOTOS           -->
+  <!-- ════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-heading sh-groups">
+      <div class="section-dot dot-groups"></div>
+      <div class="section-label label-groups">Group &amp; Family Photos · Courtyard</div>
+      <div class="section-duration">30 min</div>
+    </div>
+
+    <div class="timeline">
+      <!-- 4:30pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">4:30pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-groups"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Group Family Photos <span class="hour-badge">5th Hour</span></div>
+          <div class="entry-desc">Formal group combinations — immediate family, extended family, full guest group. Cocktail hour begins in the Library Bar for other guests.</div>
+        </div>
+      </div>
+
+      <!-- 4:30–5:00pm shot list -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">4:30pm</span>
+          <span class="time-end">–5:00pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-groups"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="shot-list">
+            <div class="shot-list-title">Group Photo Call List</div>
+            <div class="shot-list-note">Work through the following combinations in order — Ben (Celebrant/MC) will assist in calling each group to keep things moving:</div>
+            <ol>
+              <li>All guests</li>
+              <li>Bride's parents — John &amp; Pam</li>
+              <li>Bride's family — John, Pam, Lauren, Aria &amp; Riley</li>
+              <li>Bride's family (extended) — John, Pam, Lauren, Aria &amp; Riley, Lyn &amp; Alan</li>
+              <li>Both parents together — John, Pam, Geraldine &amp; Paul</li>
+              <li>Groom's parents — Geraldine &amp; Paul</li>
+              <li>Groom's family — Geraldine, Paul, Jason, Chantalle, Dean, Lavinia &amp; Sage</li>
+              <li>Groom's family (extended) — Geraldine, Paul, Jason, Chantalle, Dean, Lavinia, Sage, Eloisa, David &amp; Linden</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION: WEDDING PARTY / GOLF   -->
+  <!-- ════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-heading sh-golf">
+      <div class="section-dot dot-golf"></div>
+      <div class="section-label label-golf">Wedding Party Photos · Golf Course</div>
+      <div class="section-duration">1 hr</div>
+    </div>
+
+    <div class="timeline">
+      <!-- 5:00pm highlight -->
+      <div class="entry entry-highlight">
+        <div class="entry-time">
+          <span class="time-main">5:00pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-golf" style="width:11px;height:11px;margin-top:6px;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #5a7a9a;"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-content-inner">
+            <div class="entry-title">✦ Wedding Party on the Golf Course</div>
+            <div class="entry-desc">Golden hour begins around 5:15–5:30pm — the light here will be stunning. Wedding party portraits, bride &amp; groom couple portraits across the course.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5:00–5:45pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">5:00pm</span>
+          <span class="time-end">–5:45pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-golf"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Wedding Party Portraits</div>
+          <div class="entry-desc">Full wedding party combinations, bridesmaids solo, groomsmen solo. Bouquet and detail shots in natural setting.</div>
+        </div>
+      </div>
+
+      <!-- 5:45–6:00pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">5:45pm</span>
+          <span class="time-end">–6:00pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-golf"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Bride &amp; Groom Golden Hour <span class="hour-badge">6th Hour</span></div>
+          <div class="entry-desc">Intimate couple portraits as the sun drops. These are typically the day's most memorable images — allow the full 15 min.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════ -->
+  <!-- SECTION: RECEPTION              -->
+  <!-- ════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-heading sh-recep">
+      <div class="section-dot dot-recep"></div>
+      <div class="section-label label-recep">Reception · Rosewood Room</div>
+      <div class="section-duration">2.5 hrs</div>
+    </div>
+
+    <div class="timeline">
+      <!-- 6:00pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">6:00pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-recep"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Reception Commences</div>
+          <div class="entry-desc">Guests seated in the Rosewood Room. Cocktail hour wraps, evening begins.</div>
+        </div>
+      </div>
+
+      <!-- 6:15pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">6:15pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-recep"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Wedding Party Entrance</div>
+          <div class="entry-desc">Bridal party enters the reception.</div>
+        </div>
+      </div>
+
+      <!-- 6:15–8:15pm -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">6:15pm</span>
+          <span class="time-end">–8:15pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-recep"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Speeches, Entrées &amp; Dinner <span class="hour-badge">7th–8th Hour</span></div>
+          <div class="entry-desc">Speeches, cake cutting, entrée and main service. Candid table shots, guest moments, and any planned reception surprises. Photographer stays across all key moments leading to the first dance.</div>
+        </div>
+      </div>
+
+      <!-- 8:20pm first dance highlight -->
+      <div class="entry entry-highlight">
+        <div class="entry-time">
+          <span class="time-main">8:20pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot dot-recep" style="width:11px;height:11px;margin-top:6px;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #a87c8c;"></div>
+            <div class="entry-rail"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-content-inner">
+            <div class="entry-title">✦ First Dance</div>
+            <div class="entry-desc">Guests move back down to the Library Bar. Photographer captures the full first dance — wide shots to establish the room, close portraits of the couple, and guest reactions.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ~8:30pm end -->
+      <div class="entry">
+        <div class="entry-time">
+          <span class="time-main">~8:30pm</span>
+        </div>
+        <div class="entry-connector">
+          <div class="connector-inner">
+            <div class="entry-dot" style="background:#c4a98c;width:9px;height:9px;margin-top:7px;"></div>
+          </div>
+        </div>
+        <div class="entry-content">
+          <div class="entry-title">Photography Coverage Ends</div>
+          <div class="entry-desc">After the first dance wraps, the 8-hour coverage is complete. Dancing and celebrations continue into the evening.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NOTES ── -->
+  <div class="doc-footer">
+    <div class="footer-heading">Travel Notes</div>
+    <p>Goodna to Brisbane CBD is approx. 25 min by car; Brisbane CBD to Hillstone St Lucia is approx. 20 min. These times assume normal Wednesday afternoon traffic — allow a small buffer if travelling during school pick-up (3–3:30pm).</p>
+
+    <div class="footer-heading" style="margin-top:10px;">Parking — Cllix Skytower</div>
+    <p>We will endeavour to arrange on-site parking at the hotel for the photographer, however as this is subject to availability, the confirmed backup is <strong>First Parking, 53 Albert St, Brisbane City</strong> (a short walk to the Skytower). We will confirm the parking arrangement closer to the date.</p>
+
+    <div style="margin-top:16px;padding-top:12px;border-top:1px dashed #ddd5cc;text-align:center;">
+      <span style="font-size:7.5pt;color:#9a8f8a;letter-spacing:0.05em;">Amanda &amp; Liam &nbsp;·&nbsp; 14 October 2026 &nbsp;·&nbsp; Hillstone St Lucia &nbsp;·&nbsp; 8-hour photography coverage</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
