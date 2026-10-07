@@ -783,12 +783,18 @@ const DEFAULT_DATA = {
           id: 's-week-appts',
           name: 'Appointments',
           items: [
-            { id: 'ap5', text: 'Fish & chips', note: 'Friday 9th Oct · Evening', checked: false },
             { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct · 10:00 AM', checked: false },
-            { id: 'ap6', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · 12:00 PM', checked: false },
             { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct · 8:00 AM', checked: false },
             { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
             { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
+          ]
+        },
+        {
+          id: 's-week-meals',
+          name: 'Meals',
+          items: [
+            { id: 'ml1', text: 'Fish & chips', note: 'Friday 9th Oct · Dinner', checked: false },
+            { id: 'ml2', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · Lunch', checked: false },
           ]
         },
         {
@@ -1164,7 +1170,7 @@ function sortByDateNote(items) {
     const week = data.lists && data.lists.find(l => l.id === 'week');
     if (week) {
       const defWeek = DEFAULT_DATA.lists.find(l => l.id === 'week');
-      ['s-week-clean', 's-week-appts'].forEach(sid => {
+      ['s-week-clean', 's-week-appts', 's-week-meals'].forEach(sid => {
         if (!week.sections.some(s => s.id === sid)) {
           const defSec = defWeek && defWeek.sections.find(s => s.id === sid);
           if (defSec) week.sections.push(JSON.parse(JSON.stringify(defSec)));
@@ -1181,16 +1187,21 @@ function sortByDateNote(items) {
         if (ap1 && ap1.note === 'Sunday 11th Oct') ap1.note = 'Sunday 11th Oct · 10:00 AM';
         const ap4 = appts.items.find(i => i.id === 'ap4');
         if (ap4 && ap4.note === 'Monday 12th Oct') ap4.note = 'Monday 12th Oct · 8:00 AM';
-        // Add "Fish & chips" (Friday) if missing
-        if (!appts.items.some(i => i.id === 'ap5')) {
-          appts.items.push({ id: 'ap5', text: 'Fish & chips', note: 'Friday 9th Oct · Evening', checked: false });
-        }
-        // Add "Sunday lunch" if missing
-        if (!appts.items.some(i => i.id === 'ap6')) {
-          appts.items.push({ id: 'ap6', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · 12:00 PM', checked: false });
-        }
+        // Meals were briefly filed under Appointments — remove those ids from here
+        appts.items = appts.items.filter(i => i.id !== 'ap5' && i.id !== 'ap6');
         // Sort appointments chronologically by their date/time note
         sortByDateNote(appts.items);
+      }
+      // Ensure Meals section has its items
+      const meals = week.sections.find(s => s.id === 's-week-meals');
+      if (meals) {
+        if (!meals.items.some(i => i.id === 'ml1')) {
+          meals.items.push({ id: 'ml1', text: 'Fish & chips', note: 'Friday 9th Oct · Dinner', checked: false });
+        }
+        if (!meals.items.some(i => i.id === 'ml2')) {
+          meals.items.push({ id: 'ml2', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · Lunch', checked: false });
+        }
+        sortByDateNote(meals.items);
       }
       // Ensure Appointments sits above House clean
       const ai = week.sections.findIndex(s => s.id === 's-week-appts');
