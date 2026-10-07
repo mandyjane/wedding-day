@@ -134,6 +134,36 @@
     .timeline-btn:hover { background: rgba(200,169,167,0.1); }
     .timeline-btn i { font-size: 13px; }
 
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--ink-muted);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 4px 10px;
+      cursor: pointer;
+      background: transparent;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+    .filter-btn i { font-size: 13px; }
+    .filter-btn.active {
+      color: var(--sage-dark);
+      border-color: var(--sage);
+      background: rgba(168,184,159,0.12);
+    }
+
+    .all-done {
+      font-size: 12px;
+      color: var(--sage-dark);
+      font-style: italic;
+      padding: 6px 12px 2px;
+      opacity: 0.7;
+    }
+
     /* ── Tabs ── */
     .tabs-wrap {
       background: var(--cream);
@@ -593,6 +623,10 @@
         <button class="share-btn hidden" id="share-btn" aria-label="Share this list">
           <i class="ti ti-share" aria-hidden="true"></i>
           Share list
+        </button>
+        <button class="filter-btn" id="filter-btn" aria-label="Hide completed tasks" aria-pressed="false">
+          <i class="ti ti-eye" aria-hidden="true"></i>
+          <span id="filter-label">Hide done</span>
         </button>
       </div>
     </div>
@@ -1065,6 +1099,10 @@ try {
   data = JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
 
+// Hide-completed filter state (remembered per device)
+let hideDone = false;
+try { hideDone = localStorage.getItem('wedding-hide-done') === '1'; } catch (e) {}
+
 // ── One-off migrations: add new built-in sections to already-saved data ────────
 // (preserves everything the user has already added or checked off)
 (function migrate() {
@@ -1210,6 +1248,24 @@ document.getElementById('share-btn').addEventListener('click', () => {
   }
 });
 
+// ── Hide-done filter ──────────────────────────────────────────────────────────
+function updateFilterBtn() {
+  const btn = document.getElementById('filter-btn');
+  const label = document.getElementById('filter-label');
+  const icon = btn.querySelector('i');
+  btn.classList.toggle('active', hideDone);
+  btn.setAttribute('aria-pressed', hideDone ? 'true' : 'false');
+  label.textContent = hideDone ? 'Show all' : 'Hide done';
+  icon.className = hideDone ? 'ti ti-eye-off' : 'ti ti-eye';
+}
+document.getElementById('filter-btn').addEventListener('click', () => {
+  hideDone = !hideDone;
+  try { localStorage.setItem('wedding-hide-done', hideDone ? '1' : '0'); } catch (e) {}
+  updateFilterBtn();
+  renderContent();
+});
+updateFilterBtn();
+
 // ── Toast ─────────────────────────────────────────────────────────────────────
 let toastTimer;
 function showToast(msg) {
@@ -1308,10 +1364,17 @@ function renderContent() {
     labelRow.appendChild(sectionActions);
     content.appendChild(labelRow);
 
-    // Items
-    section.items.forEach((item) => {
+    // Items (respecting the hide-done filter)
+    const visibleItems = hideDone ? section.items.filter(i => !i.checked) : section.items;
+    visibleItems.forEach((item) => {
       content.appendChild(buildItemEl(list.id, section.id, item));
     });
+    if (hideDone && visibleItems.length === 0 && section.items.length > 0) {
+      const allDone = document.createElement('div');
+      allDone.className = 'all-done';
+      allDone.textContent = 'All done ✓';
+      content.appendChild(allDone);
+    }
 
     // Add item row at bottom of section
     const addRow = document.createElement('div');
