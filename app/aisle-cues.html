@@ -170,9 +170,17 @@
     display: grid; grid-template-columns: 62px 1fr; gap: 12px;
     align-items: baseline;
   }
+  .lyric-row .lyric-col {
+    text-align: right; line-height: 1.2;
+  }
   .lyric-row .lyric-tag {
+    display: block;
     font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--ink-faint); text-align: right;
+    text-transform: uppercase; color: var(--ink-faint);
+  }
+  .lyric-row .lyric-dur {
+    display: block; margin-top: 3px;
+    font-size: 11px; color: var(--ink-faint); font-variant-numeric: tabular-nums;
   }
   .lyric-row .lyric {
     padding: 2px 0;
@@ -241,19 +249,19 @@
     </div>
     <div class="cue-steps">
       <!-- RILEY — lyric BEFORE she descends. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">0:27</span>
-        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 8 sec</span></span>
+        <span class="step-action"><span class="big">Descend stairs</span></span>
       </div>
       <!-- RILEY — lyric AFTER descend / for walking the aisle. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 8 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">0:35</span>
-        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 11 sec to next</span></span>
+        <span class="step-action"><span class="big">Walk aisle</span></span>
       </div>
       <!-- RILEY — lyric AFTER she walks the aisle. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 11 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
     </div>
   </div>
 
@@ -267,16 +275,16 @@
     <div class="cue-steps">
       <div class="step">
         <span class="step-time">0:44</span>
-        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 7 sec</span></span>
+        <span class="step-action"><span class="big">Descend stairs</span></span>
       </div>
       <!-- SAGE — lyric for DESCEND STAIRS. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 7 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">0:51</span>
-        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 15 sec to next</span></span>
+        <span class="step-action"><span class="big">Walk aisle</span></span>
       </div>
       <!-- SAGE — lyric for WALK AISLE. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 15 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
     </div>
   </div>
 
@@ -290,16 +298,16 @@
     <div class="cue-steps">
       <div class="step">
         <span class="step-time">1:06</span>
-        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 6 sec</span></span>
+        <span class="step-action"><span class="big">Descend stairs</span></span>
       </div>
       <!-- ARIA — lyric for DESCEND STAIRS. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 6 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">1:10</span>
-        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 17 sec to next</span></span>
+        <span class="step-action"><span class="big">Walk aisle</span></span>
       </div>
       <!-- ARIA — lyric for WALK AISLE. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 17 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
     </div>
   </div>
 
@@ -313,16 +321,16 @@
     <div class="cue-steps">
       <div class="step">
         <span class="step-time">1:27</span>
-        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 6 sec</span></span>
+        <span class="step-action"><span class="big">Descend stairs</span></span>
       </div>
       <!-- LAUREN — lyric for DESCEND STAIRS. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 6 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">1:33</span>
-        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 36 sec to next</span></span>
+        <span class="step-action"><span class="big">Walk aisle</span></span>
       </div>
       <!-- LAUREN — lyric for WALK AISLE. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 36 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
     </div>
   </div>
 
@@ -336,16 +344,16 @@
     <div class="cue-steps">
       <div class="step">
         <span class="step-time">2:09</span>
-        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 17 sec</span></span>
+        <span class="step-action"><span class="big">Descend stairs</span></span>
       </div>
       <!-- AMANDA — lyric for DESCEND STAIRS. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">then 17 sec</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">2:26</span>
-        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">40 sec of aisle</span></span>
+        <span class="step-action"><span class="big">Walk aisle</span></span>
       </div>
       <!-- AMANDA — lyric for WALK AISLE. TYPE your line between the brackets: -->
-      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
+      <div class="lyric-row"><span class="lyric-col"><span class="lyric-tag">Lyric</span><span class="lyric-dur">40 sec aisle</span></span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
     </div>
     <div class="gap-note">Longest walk — the big moment. Give Amanda the full 17-second pause at the bottom of the stairs before stepping onto the aisle.</div>
   </div>
