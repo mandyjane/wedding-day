@@ -690,6 +690,7 @@ const DEFAULT_DATA = {
             { id: 'w1', text: 'Place groceries order', note: '', checked: false },
             { id: 'w2', text: 'Take cans to Containers for Change', note: '', checked: false },
             { id: 'w3', text: 'Make spare bed', note: '', checked: false },
+            { id: 'w4', text: 'Bath Leo', note: '', checked: false },
           ]
         },
         {
@@ -1045,6 +1046,11 @@ try {
     // Make Wedding Décor shareable
     const decor = data.lists && data.lists.find(l => l.id === 'decor');
     if (decor) { decor.shareable = true; }
+    // Add "Bath Leo" to This week To do
+    const weekTodo = week && week.sections.find(s => s.id === 's-week');
+    if (weekTodo && !weekTodo.items.some(i => i.id === 'w4')) {
+      weekTodo.items.push({ id: 'w4', text: 'Bath Leo', note: '', checked: false });
+    }
   } catch (e) {}
 })();
 
