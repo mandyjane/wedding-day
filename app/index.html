@@ -779,6 +779,7 @@ const DEFAULT_DATA = {
             { id: 'w8', text: 'Order catering', note: '', checked: false },
             { id: 'w9', text: 'Fix 2nd bouquet', note: '', checked: false },
             { id: 'w10', text: 'Even stems and add ribbon to bouquets', note: '', checked: false },
+            { id: 'w11', text: 'Reconfigure aisle walk song', note: '', checked: false },
           ]
         },
         {
@@ -956,7 +957,6 @@ const DEFAULT_DATA = {
           items: [
             { id: 'dc1', text: '2 × Large goal floral arrangements', note: '', checked: false },
             { id: 'dc2', text: '9 × Small floral centrepiece arrangements', note: '', checked: false },
-            { id: 'dc28', text: '3 × Flower girl baskets', note: '', checked: false },
           ]
         },
         {
@@ -969,6 +969,7 @@ const DEFAULT_DATA = {
             { id: 'dc6', text: '30 × Confetti cones', note: '', checked: false },
             { id: 'dc7', text: '1 × Confetti cone holder', note: '', checked: false },
             { id: 'dc8', text: '1 × Welcome sign', note: '', checked: false },
+            { id: 'dc28', text: '3 × Flower girl baskets', note: '', checked: false },
           ]
         },
         {
@@ -1189,6 +1190,9 @@ function sortByDateNote(items) {
         if (!todo.items.some(i => i.id === 'w10')) {
           todo.items.push({ id: 'w10', text: 'Even stems and add ribbon to bouquets', note: '', checked: false });
         }
+        if (!todo.items.some(i => i.id === 'w11')) {
+          todo.items.push({ id: 'w11', text: 'Reconfigure aisle walk song', note: '', checked: false });
+        }
       }
       // Add "Call Skytower" to Appointments if missing
       const appts = week.sections.find(s => s.id === 's-week-appts');
@@ -1243,10 +1247,17 @@ function sortByDateNote(items) {
     const decor = data.lists && data.lists.find(l => l.id === 'decor');
     if (decor) {
       decor.shareable = true;
-      // Add flower girl baskets to Florals if missing
+      // Flower girl baskets belong in Ceremony — remove from Florals if present there
       const dFlorals = decor.sections.find(s => s.id === 's-florals');
-      if (dFlorals && !dFlorals.items.some(i => i.id === 'dc28')) {
-        dFlorals.items.push({ id: 'dc28', text: '3 × Flower girl baskets', note: '', checked: false });
+      let basket = null;
+      if (dFlorals) {
+        const bi = dFlorals.items.findIndex(i => i.id === 'dc28');
+        if (bi > -1) basket = dFlorals.items.splice(bi, 1)[0];
+      }
+      // Add (or re-home) to Ceremony if missing there
+      const dCeremony = decor.sections.find(s => s.id === 's-ceremony');
+      if (dCeremony && !dCeremony.items.some(i => i.id === 'dc28')) {
+        dCeremony.items.push(basket || { id: 'dc28', text: '3 × Flower girl baskets', note: '', checked: false });
       }
     }
     // Add new To do items to This week
