@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Aisle Walk Cues · L & A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #FAF8F5;
+    --card:      #FFFFFF;
+    --ink:       #3D3330;
+    --ink-muted: #8C7D7C;
+    --ink-faint: #B89FA0;
+    --rose:      #C8A9A7;
+    --rose-dark: #8C6B69;
+    --rose-soft: #F3EAE9;
+    --sage:      #A8B89F;
+    --sage-dark: #7A9170;
+    --sage-soft: #ECF0E8;
+    --gold:      #B79A6B;
+    --gold-soft: #F3ECDD;
+    --rule:      #EDE3E2;
+    --font-serif: 'EB Garamond', Georgia, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1917; --card: #262220; --ink: #ede6e2; --ink-muted: #a2938f;
+      --ink-faint: #7d6b69; --rose: #c49a98; --rose-dark: #d9b3b1; --rose-soft: #2e2320;
+      --sage: #9fb094; --sage-dark: #b8c7ad; --sage-soft: #222a1f; --gold: #c4a874;
+      --gold-soft: #2b2518; --rule: #352f2c; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1917; --card: #262220; --ink: #ede6e2; --ink-muted: #a2938f;
+    --ink-faint: #7d6b69; --rose: #c49a98; --rose-dark: #d9b3b1; --rose-soft: #2e2320;
+    --sage: #9fb094; --sage-dark: #b8c7ad; --sage-soft: #222a1f; --gold: #c4a874;
+    --gold-soft: #2b2518; --rule: #352f2c; color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    padding: calc(24px + var(--safe-top)) 16px calc(40px + var(--safe-bottom));
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+
+  /* ── Top bar (screen only) ── */
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; margin-bottom: 20px;
+  }
+  .back-link, .print-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; border-radius: 16px; padding: 6px 14px;
+    cursor: pointer; white-space: nowrap; font-family: var(--font-sans);
+    text-decoration: none;
+  }
+  .back-link { color: var(--rose-dark); border: 0.5px solid var(--rose); background: transparent; }
+  .print-btn { color: #fff; background: var(--sage-dark); border: none; font-weight: 500; }
+
+  /* ── Header ── */
+  .header { text-align: center; margin-bottom: 22px; }
+  .eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+  }
+  .title {
+    font-family: var(--font-serif); font-size: clamp(26px, 8vw, 38px);
+    font-weight: 400; font-style: italic; line-height: 1.05; margin-bottom: 8px;
+  }
+  .song-line {
+    font-size: 13px; color: var(--ink-muted); letter-spacing: 0.02em;
+  }
+  .song-line strong { color: var(--ink); font-weight: 600; }
+  .runtime {
+    display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--rose-dark);
+    background: var(--rose-soft); border-radius: 14px; padding: 4px 13px;
+  }
+
+  /* ── How to use ── */
+  .howto {
+    background: var(--card); border: 0.5px solid var(--rule);
+    border-left: 3px solid var(--gold); border-radius: 8px;
+    padding: 12px 15px; margin-bottom: 22px; font-size: 12.5px; color: var(--ink-muted);
+  }
+  .howto strong { color: var(--ink); }
+
+  /* ── Cue cards ── */
+  .cue {
+    background: var(--card); border: 0.5px solid var(--rule);
+    border-radius: 11px; padding: 14px 16px; margin-bottom: 10px;
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .cue.bride { border: 1.5px solid var(--gold); background: var(--gold-soft); }
+
+  .cue-head {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px;
+  }
+  .cue-order {
+    font-family: var(--font-serif); font-size: 15px; font-style: italic;
+    color: var(--ink-faint); flex-shrink: 0;
+  }
+  .cue-name {
+    font-family: var(--font-serif); font-size: 23px; font-weight: 500;
+    line-height: 1; color: var(--ink); flex: 1;
+  }
+  .cue.bride .cue-name { color: var(--rose-dark); }
+  .cue-role {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-faint);
+    background: var(--rose-soft); border-radius: 10px; padding: 2px 9px;
+    flex-shrink: 0; align-self: center;
+  }
+  .cue.bride .cue-role { background: #fff; color: var(--gold); }
+
+  .cue-steps { display: flex; flex-direction: column; gap: 7px; }
+  .step {
+    display: grid; grid-template-columns: 62px 1fr; gap: 12px;
+    align-items: center;
+  }
+  .step-time {
+    font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums;
+    color: var(--sage-dark); text-align: right; line-height: 1;
+  }
+  .cue.bride .step-time { color: var(--rose-dark); }
+  .step-action { font-size: 14px; color: var(--ink); }
+  .step-action .dur {
+    display: inline-block; font-size: 11px; color: var(--ink-faint);
+    margin-left: 6px;
+  }
+  .step-action .big {
+    font-weight: 600;
+  }
+
+  .gap-note {
+    font-size: 11px; color: var(--ink-faint); font-style: italic;
+    margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--rule);
+  }
+
+  .song-end {
+    text-align: center; font-size: 12px; color: var(--ink-faint);
+    font-family: var(--font-serif); font-style: italic;
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--rule);
+  }
+  .footer {
+    text-align: center; margin-top: 22px; font-size: 11px;
+    color: var(--ink-faint); letter-spacing: 0.04em;
+    font-family: var(--font-serif); font-style: italic;
+  }
+
+  /* ── Print ── */
+  @media print {
+    @page { size: A4; margin: 14mm; }
+    body { background: #fff; color: #000; padding: 0; }
+    :root {
+      --bg: #fff; --card: #fff; --ink: #1a1a1a; --ink-muted: #555;
+      --ink-faint: #888; --rose-soft: #f5edec; --gold-soft: #f7f1e4;
+      --rule: #ddd; color-scheme: light;
+    }
+    .no-print { display: none !important; }
+    .cue { border: 1px solid #ccc; box-shadow: none; margin-bottom: 8px; }
+    .cue.bride { border: 2px solid var(--gold); }
+    .howto { margin-bottom: 14px; }
+    .title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-bar no-print">
+    <a class="back-link" href="index.html">← Back</a>
+    <button class="print-btn" onclick="window.print()">⎙ Print / Save as PDF</button>
+  </div>
+
+  <div class="header">
+    <div class="eyebrow">14 October 2026 · Hillstone St Lucia</div>
+    <h1 class="title">Aisle Walk Cues</h1>
+    <div class="song-line">Processional · <strong>Ordinary</strong> — Alex Warren</div>
+    <div class="runtime">Song runs 0:00 – 3:06</div>
+  </div>
+
+  <div class="howto">
+    <strong>How to use:</strong> Start the song, watch the timer. At each time below, send that person. Each has two cues — first to <strong>descend the stairs</strong>, then to <strong>start down the aisle</strong>. The seconds in brackets are how long they have before the next cue.
+  </div>
+
+  <!-- Riley -->
+  <div class="cue">
+    <div class="cue-head">
+      <span class="cue-order">1st</span>
+      <span class="cue-name">Riley</span>
+      <span class="cue-role">Flower Girl</span>
+    </div>
+    <div class="cue-steps">
+      <div class="step">
+        <span class="step-time">0:27</span>
+        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 8 sec</span></span>
+      </div>
+      <div class="step">
+        <span class="step-time">0:35</span>
+        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 11 sec to next</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sage -->
+  <div class="cue">
+    <div class="cue-head">
+      <span class="cue-order">2nd</span>
+      <span class="cue-name">Sage</span>
+      <span class="cue-role">Flower Girl</span>
+    </div>
+    <div class="cue-steps">
+      <div class="step">
+        <span class="step-time">0:44</span>
+        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 7 sec</span></span>
+      </div>
+      <div class="step">
+        <span class="step-time">0:51</span>
+        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 15 sec to next</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aria -->
+  <div class="cue">
+    <div class="cue-head">
+      <span class="cue-order">3rd</span>
+      <span class="cue-name">Aria</span>
+      <span class="cue-role">Flower Girl</span>
+    </div>
+    <div class="cue-steps">
+      <div class="step">
+        <span class="step-time">1:06</span>
+        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 6 sec</span></span>
+      </div>
+      <div class="step">
+        <span class="step-time">1:10</span>
+        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 17 sec to next</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lauren -->
+  <div class="cue">
+    <div class="cue-head">
+      <span class="cue-order">4th</span>
+      <span class="cue-name">Lauren</span>
+      <span class="cue-role">Bridesmaid</span>
+    </div>
+    <div class="cue-steps">
+      <div class="step">
+        <span class="step-time">1:27</span>
+        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 6 sec</span></span>
+      </div>
+      <div class="step">
+        <span class="step-time">1:33</span>
+        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 36 sec to next</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mandy -->
+  <div class="cue bride">
+    <div class="cue-head">
+      <span class="cue-order">5th</span>
+      <span class="cue-name">Amanda</span>
+      <span class="cue-role">The Bride</span>
+    </div>
+    <div class="cue-steps">
+      <div class="step">
+        <span class="step-time">2:09</span>
+        <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 17 sec</span></span>
+      </div>
+      <div class="step">
+        <span class="step-time">2:26</span>
+        <span class="step-action"><span class="big">Walk aisle</span><span class="dur">40 sec of aisle</span></span>
+      </div>
+    </div>
+    <div class="gap-note">Longest walk — the big moment. Give Amanda the full 17-second pause at the top of the stairs before the aisle cue.</div>
+  </div>
+
+  <div class="song-end">Song ends 3:06 — Amanda should be at the altar by ~3:06</div>
+
+  <div class="footer">Amanda &amp; Liam · 14 October 2026 · Hillstone St Lucia</div>
+
+</div>
+</body>
+</html>
