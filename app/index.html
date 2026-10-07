@@ -732,10 +732,10 @@ const DEFAULT_DATA = {
           id: 's-week-appts',
           name: 'Appointments',
           items: [
-            { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct', checked: false },
+            { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct · 10:00 AM', checked: false },
             { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
             { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
-            { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct', checked: false },
+            { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct · 8:00 AM', checked: false },
           ]
         },
         {
@@ -1082,7 +1082,14 @@ try {
       // Add "Call Skytower" to Appointments if missing
       const appts = week.sections.find(s => s.id === 's-week-appts');
       if (appts && !appts.items.some(i => i.id === 'ap4')) {
-        appts.items.push({ id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct', checked: false });
+        appts.items.push({ id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct · 8:00 AM', checked: false });
+      }
+      // Add times to threading & Skytower notes (match defaults)
+      if (appts) {
+        const ap1 = appts.items.find(i => i.id === 'ap1');
+        if (ap1 && ap1.note === 'Sunday 11th Oct') ap1.note = 'Sunday 11th Oct · 10:00 AM';
+        const ap4 = appts.items.find(i => i.id === 'ap4');
+        if (ap4 && ap4.note === 'Monday 12th Oct') ap4.note = 'Monday 12th Oct · 8:00 AM';
       }
       // Ensure Appointments sits above House clean
       const ai = week.sections.findIndex(s => s.id === 's-week-appts');
