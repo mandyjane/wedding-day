@@ -745,6 +745,15 @@ const DEFAULT_DATA = {
             { id: 'hc11', text: 'Mop floor', note: '', checked: false },
             { id: 'hc12', text: 'Windex windows and mirrors', note: '', checked: false },
           ]
+        },
+        {
+          id: 's-week-appts',
+          name: 'Appointments',
+          items: [
+            { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct', checked: false },
+            { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
+            { id: 'ap3', text: 'Eyelash appointment', note: 'Monday 12th Oct · 12:00 PM', checked: false },
+          ]
         }
       ]
     },
@@ -1059,14 +1068,16 @@ try {
 // (preserves everything the user has already added or checked off)
 (function migrate() {
   try {
-    // Add "House clean" section to This week
+    // Add built-in sections to This week if missing
     const week = data.lists && data.lists.find(l => l.id === 'week');
-    if (week && !week.sections.some(s => s.id === 's-week-clean')) {
-      const def = DEFAULT_DATA.lists.find(l => l.id === 'week');
-      const defClean = def && def.sections.find(s => s.id === 's-week-clean');
-      if (defClean) {
-        week.sections.push(JSON.parse(JSON.stringify(defClean)));
-      }
+    if (week) {
+      const defWeek = DEFAULT_DATA.lists.find(l => l.id === 'week');
+      ['s-week-clean', 's-week-appts'].forEach(sid => {
+        if (!week.sections.some(s => s.id === sid)) {
+          const defSec = defWeek && defWeek.sections.find(s => s.id === sid);
+          if (defSec) week.sections.push(JSON.parse(JSON.stringify(defSec)));
+        }
+      });
     }
     // Add "Boutonniere for Dad" to Bride's Gifts & keepsakes
     const bride = data.lists && data.lists.find(l => l.id === 'bride');
