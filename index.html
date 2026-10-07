@@ -58,15 +58,13 @@
       height: 100dvh;
       max-width: 480px;
       margin: 0 auto;
-      overflow: hidden;
     }
 
     /* ── Header ── */
     .header {
       background: var(--cream);
       padding: calc(12px + var(--safe-top)) 20px 0;
-      position: sticky;
-      top: 0;
+      flex-shrink: 0;
       z-index: 10;
     }
 
@@ -115,8 +113,7 @@
     .tabs-wrap {
       background: var(--cream);
       padding: 10px 20px 0;
-      position: sticky;
-      top: 0;
+      flex-shrink: 0;
       z-index: 10;
     }
 
