@@ -783,6 +783,7 @@ const DEFAULT_DATA = {
           id: 's-week-appts',
           name: 'Appointments',
           items: [
+            { id: 'ap5', text: 'Fish & chips', note: 'Friday 9th Oct · Evening', checked: false },
             { id: 'ap1', text: 'Face threading, leg & bra wax', note: 'Sunday 11th Oct · 10:00 AM', checked: false },
             { id: 'ap4', text: 'Call Skytower to check parking availability', note: 'Monday 12th Oct · 8:00 AM', checked: false },
             { id: 'ap2', text: 'Nail appointment', note: 'Monday 12th Oct · 9:00 AM', checked: false },
@@ -1179,6 +1180,10 @@ function sortByDateNote(items) {
         if (ap1 && ap1.note === 'Sunday 11th Oct') ap1.note = 'Sunday 11th Oct · 10:00 AM';
         const ap4 = appts.items.find(i => i.id === 'ap4');
         if (ap4 && ap4.note === 'Monday 12th Oct') ap4.note = 'Monday 12th Oct · 8:00 AM';
+        // Add "Fish & chips" (Friday) if missing
+        if (!appts.items.some(i => i.id === 'ap5')) {
+          appts.items.push({ id: 'ap5', text: 'Fish & chips', note: 'Friday 9th Oct · Evening', checked: false });
+        }
         // Sort appointments chronologically by their date/time note
         sortByDateNote(appts.items);
       }
