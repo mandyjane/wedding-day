@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>L &amp; A · 14·10·26</title>
+  <meta name="description" content="Wedding day checklists" />
+  <meta name="theme-color" content="#FAF8F5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="L &amp; A" />
+  <link rel="manifest" href="/wedding-day/app/manifest.json" />
+  <link rel="apple-touch-icon" href="/wedding-day/app/icon-192.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #C8A9A7;
+      --rose-light: #EDE3E2;
+      --rose-dark: #8C6B69;
+      --sage: #A8B89F;
+      --sage-dark: #7A9170;
+      --cream: #FAF8F5;
+      --white: #FFFFFF;
+      --ink: #3D3330;
+      --ink-muted: #8C7D7C;
+      --ink-faint: #B89FA0;
+      --danger: #D98A8A;
+      --border: #EDE3E2;
+      --radius: 12px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    html {
+      height: 100%;
+      height: 100dvh;
+    }
+
+    body {
+      height: 100%;
+      height: 100dvh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      height: 100dvh;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--cream);
+      padding: calc(12px + var(--safe-top)) 20px 0;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .header-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .header-sub {
+      font-size: 11px;
+      color: var(--ink-faint);
+      margin-top: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--sage-dark);
+      border: 0.5px solid var(--sage);
+      border-radius: 16px;
+      padding: 4px 10px;
+      cursor: pointer;
+      background: transparent;
+      white-space: nowrap;
+      transition: background 0.15s;
+      margin-top: 2px;
+    }
+    .share-btn:hover { background: rgba(168,184,159,0.1); }
+    .share-btn i { font-size: 13px; }
+    .share-btn.hidden { visibility: hidden; pointer-events: none; }
+
+    /* ── Tabs ── */
+    .tabs-wrap {
+      background: var(--cream);
+      padding: 10px 20px 0;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 10px;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+
+    .tab {
+      padding: 5px 13px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 500;
+      border: 0.5px solid var(--rose);
+      color: var(--ink-faint);
+      white-space: nowrap;
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tab:hover { background: rgba(200,169,167,0.08); }
+    .tab.active {
+      background: var(--rose);
+      color: #fff;
+      border-color: var(--rose);
+    }
+    .tab.new-tab {
+      border: 0.5px dashed var(--sage);
+      color: var(--sage-dark);
+    }
+    .tab.new-tab:hover { background: rgba(168,184,159,0.1); }
+
+    .tab-close {
+      font-size: 11px;
+      opacity: 0.6;
+      margin-left: 2px;
+      display: none;
+      line-height: 1;
+    }
+    .tab:not(.builtin):hover .tab-close { display: inline; }
+
+    /* ── Pull to refresh ── */
+    .ptr-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 0;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: height 0.1s ease;
+      color: var(--ink-faint);
+      font-size: 12px;
+    }
+    .ptr-indicator.visible { height: 48px; }
+    .ptr-indicator.ready .ptr-label { color: var(--rose-dark); }
+    .ptr-spinner {
+      transition: transform 0.1s linear;
+      flex-shrink: 0;
+    }
+    @keyframes ptr-spin {
+      to { transform: rotate(360deg); }
+    }
+    .ptr-indicator.refreshing .ptr-spinner {
+      animation: ptr-spin 0.7s linear infinite;
+    }
+
+    /* ── Content ── */
+    .content {
+      flex: 1 1 0;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 8px 20px calc(80px + var(--safe-bottom));
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section-label {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      margin: 16px 0 7px;
+    }
+    .section-label:first-of-type { margin-top: 4px; }
+
+    /* ── Items ── */
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 10px 12px;
+      background: var(--white);
+      border-radius: 10px;
+      border: 0.5px solid var(--border);
+      margin-bottom: 6px;
+      cursor: default;
+      transition: border-color 0.15s;
+      touch-action: pan-y;
+    }
+    .item.dragging {
+      opacity: 0.5;
+      border-color: var(--rose);
+    }
+    .item.drag-over {
+      border-color: var(--rose);
+      background: rgba(200,169,167,0.05);
+    }
+
+    .check-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--rose);
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s;
+      background: transparent;
+    }
+    .check-btn.checked {
+      background: var(--rose);
+      border-color: var(--rose);
+    }
+    .check-btn.checked::after {
+      content: '';
+      width: 5px;
+      height: 9px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translate(-1px, -1px);
+      display: block;
+    }
+
+    .item-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-text {
+      font-size: 13.5px;
+      color: var(--ink);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .item-text.checked {
+      color: var(--ink-faint);
+      text-decoration: line-through;
+    }
+
+    .item-note {
+      font-size: 11.5px;
+      color: var(--ink-faint);
+      margin-top: 3px;
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+      opacity: 0;
+      transition: opacity 0.15s;
+      align-items: center;
+      padding-top: 1px;
+    }
+    .item:hover .item-actions,
+    .item:focus-within .item-actions { opacity: 1; }
+
+    .item-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-muted);
+      transition: background 0.12s;
+    }
+    .item-btn:hover { background: var(--rose-light); }
+    .item-btn.danger:hover { background: #fce8e8; color: var(--danger); }
+    .item-btn i { font-size: 15px; }
+
+    .drag-handle {
+      cursor: grab;
+      color: var(--ink-faint);
+      padding: 2px 0;
+    }
+    .drag-handle:active { cursor: grabbing; }
+
+    .move-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .move-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 18px;
+      border: none;
+      background: transparent;
+      color: var(--ink-faint);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.12s, color 0.12s;
+      padding: 0;
+    }
+    .move-btn:hover { background: var(--rose-light); color: var(--rose-dark); }
+    .move-btn:disabled { opacity: 0.2; cursor: default; }
+    .move-btn i { font-size: 13px; }
+
+    /* ── Add item row ── */
+    .add-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 0.5px dashed var(--rose);
+      color: var(--rose);
+      font-size: 13px;
+      margin-top: 4px;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .add-row:hover { background: rgba(200,169,167,0.07); }
+    .add-row i { font-size: 15px; }
+
+    /* ── FAB ── */
+    .fab {
+      position: fixed;
+      bottom: calc(20px + var(--safe-bottom));
+      right: 50%;
+      transform: translateX(calc(50% + 140px - 20px));
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, transform 0.15s;
+      z-index: 20;
+    }
+    .fab:hover { background: var(--sage-dark); transform: translateX(calc(50% + 140px - 20px)) scale(1.05); }
+    .fab i { font-size: 22px; color: #fff; }
+
+    @media (max-width: 480px) {
+      .fab {
+        right: 20px;
+        transform: none;
+      }
+      .fab:hover { transform: scale(1.05); }
+    }
+
+    /* ── Empty state ── */
+    .empty {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--ink-faint);
+    }
+    .empty i { font-size: 40px; margin-bottom: 12px; display: block; }
+    .empty p { font-size: 14px; line-height: 1.5; }
+
+    /* ── Bottom sheet overlay ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(61,51,48,0.4);
+      z-index: 50;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 0 calc(var(--safe-bottom));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .sheet {
+      background: var(--cream);
+      border-radius: 20px 20px 0 0;
+      padding: 20px 20px calc(24px + var(--safe-bottom));
+      width: 100%;
+      max-width: 480px;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.32,0,0.67,0);
+    }
+    .overlay.open .sheet {
+      transform: translateY(0);
+      transition: transform 0.28s cubic-bezier(0.33,1,0.68,1);
+    }
+
+    .sheet-handle {
+      width: 36px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+
+    .sheet-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .sheet input, .sheet textarea {
+      width: 100%;
+      border: 0.5px solid var(--rose);
+      border-radius: 10px;
+      padding: 10px 13px;
+      font-size: 14px;
+      background: var(--white);
+      color: var(--ink);
+      outline: none;
+      font-family: inherit;
+      margin-bottom: 10px;
+      resize: none;
+    }
+    .sheet input:focus, .sheet textarea:focus {
+      border-color: var(--rose-dark);
+      box-shadow: 0 0 0 3px rgba(200,169,167,0.15);
+    }
+    .sheet input::placeholder, .sheet textarea::placeholder { color: var(--ink-faint); }
+
+    .sheet label {
+      font-size: 12px;
+      color: var(--ink-muted);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .sheet-btns {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.12s;
+      border: none;
+    }
+    .btn:active { opacity: 0.8; }
+    .btn-secondary {
+      background: transparent;
+      border: 0.5px solid var(--rose);
+      color: var(--rose-dark);
+    }
+    .btn-primary {
+      background: var(--rose);
+      color: #fff;
+    }
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+    .btn-sage {
+      background: var(--sage);
+      color: #fff;
+    }
+
+    /* ── Confirm sheet ── */
+    .confirm-text {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .confirm-text strong { font-weight: 500; }
+
+    /* ── Share toast ── */
+    .toast {
+      position: fixed;
+      top: calc(20px + var(--safe-top));
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: var(--ink);
+      color: #fff;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 20px;
+      white-space: nowrap;
+      z-index: 100;
+      transition: transform 0.25s cubic-bezier(0.33,1,0.68,1);
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 8px 0 0;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--rose);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="header-row">
+      <div>
+        <div class="header-title">L &amp; A ·· 14·10·26</div>
+        <div class="header-sub" id="countdown-sub">Loading…</div>
+      </div>
+      <button class="share-btn hidden" id="share-btn" aria-label="Share this list">
+        <i class="ti ti-share" aria-hidden="true"></i>
+        Share list
+      </button>
+    </div>
+    <div class="progress-wrap" id="progress-wrap" style="display:none">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="tabs-wrap">
+    <div class="tabs" id="tabs-container" role="tablist" aria-label="Checklists"></div>
+  </div>
+
+  <div class="ptr-indicator" id="ptr-indicator">
+    <svg class="ptr-spinner" id="ptr-spinner" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="40" stroke-dashoffset="30"/>
+    </svg>
+    <span class="ptr-label" id="ptr-label">Pull to refresh</span>
+  </div>
+  <div class="content" id="content" role="tabpanel"></div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fab" aria-label="Add item">
+  <i class="ti ti-plus" aria-hidden="true"></i>
+</button>
+
+<!-- Add / Edit item sheet -->
+<div class="overlay" id="item-overlay" role="dialog" aria-modal="true" aria-label="Add or edit item">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="item-sheet-title">Add item</div>
+    <label for="item-input">Item</label>
+    <input id="item-input" type="text" placeholder="What needs doing?" autocomplete="off" />
+    <label for="note-input">Note <span style="color:var(--ink-faint);font-weight:400">(optional)</span></label>
+    <textarea id="note-input" rows="2" placeholder="Any helpful details…"></textarea>
+    <div class="sheet-btns">
+      <button class="btn btn-secondary" id="item-cancel">Cancel</button>
+      <button class="btn btn-primary" id="item-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add section sheet -->
+<div class="overlay" id="section-overlay" role="dialog" aria-modal="true" aria-label="Add section">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Add section</div>
+    <label for="section-input">Section name</label>
+    <input id="section-input" type="text" placeholder="e.g. Toiletries, Clothing…" autocomplete="off" />
+    <div class="sheet-btns">
+      <button class="btn btn-secondary" id="section-cancel">Cancel</button>
+      <button class="btn btn-primary" id="section-save">Add section</button>
+    </div>
+  </div>
+</div>
+
+<!-- New list sheet -->
+<div class="overlay" id="list-overlay" role="dialog" aria-modal="true" aria-label="New checklist">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">New checklist</div>
+    <label for="list-input">List name</label>
+    <input id="list-input" type="text" placeholder="e.g. Venue bag, Car kit…" autocomplete="off" />
+    <div class="sheet-btns">
+      <button class="btn btn-secondary" id="list-cancel">Cancel</button>
+      <button class="btn btn-sage" id="list-save">Create list</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm delete item -->
+<div class="overlay" id="confirm-item-overlay" role="dialog" aria-modal="true" aria-label="Confirm removal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <p class="confirm-text">Remove <strong id="confirm-item-name">"item"</strong> from this list?</p>
+    <div class="sheet-btns">
+      <button class="btn btn-secondary" id="confirm-item-cancel">Keep it</button>
+      <button class="btn btn-danger" id="confirm-item-ok">Remove</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm delete list -->
+<div class="overlay" id="confirm-list-overlay" role="dialog" aria-modal="true" aria-label="Confirm list removal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <p class="confirm-text">Delete <strong id="confirm-list-name">"list"</strong>? All items will be removed.</p>
+    <div class="sheet-btns">
+      <button class="btn btn-secondary" id="confirm-list-cancel">Keep it</button>
+      <button class="btn btn-danger" id="confirm-list-ok">Delete list</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm delete section -->
+<div class="overlay" id="confirm-section-overlay" role="dialog" aria-modal="true" aria-label="Confirm section removal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <p class="confirm-text">Delete the section <strong id="confirm-section-name">"section"</strong> and all its items?</p>
+    <div class="sheet-btns">
+      <button class="btn btn-secondary" id="confirm-section-cancel">Keep it</button>
+      <button class="btn btn-danger" id="confirm-section-ok">Delete section</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// ── Default data ──────────────────────────────────────────────────────────────
+const DEFAULT_DATA = {
+  activeList: 'week',
+  lists: [
+    {
+      id: 'week',
+      name: 'This week',
+      icon: '📋',
+      builtin: true,
+      shareable: false,
+      sections: [
+        {
+          id: 's-week',
+          name: 'To do',
+          items: [
+            { id: 'w1', text: 'Place groceries order', note: '', checked: false },
+            { id: 'w2', text: 'Take cans to Containers for Change', note: '', checked: false },
+            { id: 'w3', text: 'Make spare bed', note: '', checked: false },
+          ]
+        }
+      ]
+    },
+    {
+      id: 'bride',
+      name: "Bride's packing list",
+      icon: '👰',
+      builtin: true,
+      shareable: false,
+      sections: [
+        {
+          id: 's-bride-bathroom',
+          name: 'Bathroom',
+          items: [
+            { id: 'b1', text: 'Shampoo', note: '', checked: false },
+            { id: 'b2', text: 'Conditioner', note: '', checked: false },
+            { id: 'b3', text: 'Hair brush', note: '', checked: false },
+            { id: 'b4', text: 'Moisturiser', note: '', checked: false },
+            { id: 'b5', text: 'Exfoliate mitt', note: '', checked: false },
+            { id: 'b6', text: 'Deodorant', note: '', checked: false },
+            { id: 'b7', text: 'Razor', note: '', checked: false },
+            { id: 'b8', text: 'Toothbrush', note: '', checked: false },
+            { id: 'b9', text: 'Toothpaste', note: '', checked: false },
+            { id: 'b10', text: 'Vagisil', note: '', checked: false },
+            { id: 'b11', text: 'Face mask', note: '', checked: false },
+            { id: 'b12', text: 'Cotton buds', note: '', checked: false },
+            { id: 'b13', text: 'Fem Fresh wipes', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-clothing',
+          name: 'Clothing',
+          items: [
+            { id: 'c1', text: 'Coat hanger', note: '', checked: false },
+            { id: 'c2', text: 'Sticky boobs', note: '', checked: false },
+            { id: 'c3', text: 'Shoes × 2', note: '', checked: false },
+            { id: 'c4', text: 'Thongs', note: '', checked: false },
+            { id: 'c5', text: 'White mini dress', note: '', checked: false },
+            { id: 'c6', text: 'Wedding dress', note: '', checked: false },
+            { id: 'c7', text: 'Veil', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-dress-prep',
+          name: 'Dress prep',
+          items: [
+            { id: 'd1', text: 'Steamer', note: '', checked: false },
+            { id: 'd2', text: 'Filtered water', note: 'For steamer', checked: false },
+            { id: 'd3', text: 'White chalk', note: '', checked: false },
+            { id: 'd4', text: 'Needle + white & sage green thread', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-tech',
+          name: 'Tech & extras',
+          items: [
+            { id: 'e1', text: 'Speaker', note: '', checked: false },
+            { id: 'e2', text: 'Charger', note: '', checked: false },
+            { id: 'e3', text: 'Power bank', note: '', checked: false },
+            { id: 'e4', text: 'Fan', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-emergency',
+          name: 'Emergency kit',
+          items: [
+            { id: 'k1', text: 'Straws', note: '', checked: false },
+            { id: 'k2', text: 'Band aids', note: '', checked: false },
+            { id: 'k3', text: 'Booby tape', note: '', checked: false },
+            { id: 'k4', text: 'Eyelash glue', note: '', checked: false },
+            { id: 'k5', text: 'Scissors', note: '', checked: false },
+            { id: 'k6', text: 'Safety pins', note: '', checked: false },
+            { id: 'k7', text: 'Clear hair ties', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-snacks',
+          name: 'Snacks & supplies',
+          items: [
+            { id: 'f1', text: 'Champagne', note: '', checked: false },
+            { id: 'f2', text: 'Water', note: '', checked: false },
+            { id: 'f3', text: 'Banana 🍌', note: '', checked: false },
+            { id: 'f4', text: 'Fennel seeds', note: '', checked: false },
+            { id: 'f5', text: 'Digestive enzyme tablets', note: '', checked: false },
+            { id: 'f6', text: 'Cash', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-gifts',
+          name: 'Gifts & keepsakes',
+          items: [
+            { id: 'g1', text: 'Bridesmaid & flower girl gift bags', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-getting-ready',
+          name: 'Getting ready',
+          items: [
+            { id: 'gr1', text: 'White robe', note: '', checked: false },
+            { id: 'gr2', text: 'Slippers', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-bride-jewellery',
+          name: 'Jewellery & accessories',
+          items: [
+            { id: 'j1', text: 'Jewellery & accessories', note: '', checked: false },
+          ]
+        }
+      ]
+    },
+    {
+      id: 'groom',
+      name: "Groom's checklist",
+      icon: '💍',
+      builtin: true,
+      shareable: true,
+      sections: [
+        {
+          id: 's-groom-essentials',
+          name: 'Essentials',
+          items: [
+            { id: 'i1', text: 'Rings', note: '', checked: false },
+            { id: 'i2', text: 'Passports', note: '', checked: false },
+            { id: 'i3', text: 'Iron shirt', note: 'Small ironing board in spare bedroom — in the cupboard on the right at the bottom. Iron is in the linen cupboard top left.', checked: false },
+            { id: 'i4', text: 'Polish shoes', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-groom-florals',
+          name: 'Florals',
+          items: [
+            { id: 'i5', text: 'Boutonniere', note: '', checked: false },
+            { id: 'i6', text: "Boutonniere for Dad", note: '', checked: false },
+          ]
+        }
+      ]
+    },
+    {
+      id: 'decor',
+      name: 'Wedding Décor',
+      icon: '✨',
+      builtin: true,
+      shareable: false,
+      sections: [
+        {
+          id: 's-florals',
+          name: 'Florals',
+          items: [
+            { id: 'dc1', text: '2 × Large goal floral arrangements', note: '', checked: false },
+            { id: 'dc2', text: '9 × Small floral centrepiece arrangements', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-ceremony',
+          name: 'Ceremony',
+          items: [
+            { id: 'dc3', text: 'Happy tears tissues', note: '', checked: false },
+            { id: 'dc4', text: 'Tissues container', note: '', checked: false },
+            { id: 'dc5', text: '12 × Reserved seating tags', note: '', checked: false },
+            { id: 'dc6', text: '30 × Confetti cones', note: '', checked: false },
+            { id: 'dc7', text: '1 × Confetti cone holder', note: '', checked: false },
+            { id: 'dc8', text: '1 × Welcome sign', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-cocktail',
+          name: 'Cocktail hour / Reception',
+          items: [
+            { id: 'dc9', text: '2 × QR code perspex signs (seating, menu, photos)', note: '', checked: false },
+            { id: 'dc10', text: '54 × Table place cards', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-guestbook',
+          name: 'Guestbook',
+          items: [
+            { id: 'dc11', text: '1 × Guest book', note: '', checked: false },
+            { id: 'dc12', text: '2 × Gold stands (guestbook + Better Half Showdown cards)', note: '', checked: false },
+            { id: 'dc13', text: '1 × Guest book perspex sign', note: '', checked: false },
+            { id: 'dc14', text: '4 × Sage green pens', note: '', checked: false },
+            { id: 'dc15', text: '1 × Instax Square SQ1 Instant Camera', note: '', checked: false },
+            { id: 'dc16', text: '70 × Instax square film (7 × boxes of 10)', note: '', checked: false },
+            { id: 'dc17', text: '4 × Sheets gold corner stickers for polaroid photos', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-game',
+          name: 'Wedding game',
+          items: [
+            { id: 'dc18', text: '24 × Black Bic pens (2 × boxes of 12)', note: '', checked: false },
+            { id: 'dc19', text: "60 × 'Better Half Showdown' game cards", note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-favours',
+          name: 'Wedding favours',
+          items: [
+            { id: 'dc20', text: '1 × Wedding favours perspex sign', note: '', checked: false },
+            { id: 'dc21', text: '2 × Clear plastic containers of chocolate wedding favours', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-misc',
+          name: 'Misc',
+          items: [
+            { id: 'dc22', text: '1 × Mr & Mrs glasses', note: '', checked: false },
+            { id: 'dc23', text: '40 × Coasters', note: '', checked: false },
+            { id: 'dc24', text: '30 × Take-away cake boxes', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-wishingwell',
+          name: 'Wishing well',
+          items: [
+            { id: 'dc25', text: '1 × Cards & gifts perspex sign', note: '', checked: false },
+            { id: 'dc26', text: '1 × Glass wishing well', note: '', checked: false },
+            { id: 'dc27', text: '1 × Cardboard backup cards and gift box', note: '', checked: false },
+          ]
+        }
+      ]
+    },
+    {
+      id: 'emergency',
+      name: 'Emergency kit',
+      icon: '🩹',
+      builtin: true,
+      shareable: false,
+      sections: [
+        {
+          id: 's-em-essentials',
+          name: 'Essentials',
+          items: [
+            { id: 'em1',  text: 'Cotton rounds', note: '', checked: false },
+            { id: 'em2',  text: 'Nail file', note: '', checked: false },
+            { id: 'em4',  text: 'Nail polish (matches current nail colour)', note: '', checked: false },
+            { id: 'em5',  text: 'Hand lotion', note: '', checked: false },
+            { id: 'em6',  text: 'Hand sanitiser', note: '', checked: false },
+            { id: 'em7',  text: 'Bobby pins & hair bands', note: '', checked: false },
+            { id: 'em8',  text: 'Tweezers', note: '', checked: false },
+            { id: 'em9',  text: 'Hairbrush or comb', note: '', checked: false },
+            { id: 'em11', text: 'Small compact mirror', note: '', checked: false },
+            { id: 'em12', text: 'Hairspray', note: '', checked: false },
+            { id: 'em13', text: 'Dry shampoo', note: '', checked: false },
+            { id: 'em14', text: 'Deodorant', note: '', checked: false },
+            { id: 'em16', text: 'Perfume', note: '', checked: false },
+            { id: 'em17', text: 'Floss', note: '', checked: false },
+            { id: 'em18', text: 'Gum', note: '', checked: false },
+            { id: 'em19', text: 'Breath mints', note: '', checked: false },
+            { id: 'em22', text: 'Menstrual products', note: '', checked: false },
+            { id: 'em23', text: 'Tylenol (or any pain reliever)', note: '', checked: false },
+            { id: 'em24', text: 'Antihistamine tablets', note: '', checked: false },
+            { id: 'em25', text: 'Insect bite ointment', note: '', checked: false },
+            { id: 'em26', text: 'Razor', note: '', checked: false },
+            { id: 'em27', text: 'Tissues', note: '', checked: false },
+            { id: 'em28', text: 'Blister bandages', note: '', checked: false },
+            { id: 'em29', text: 'Phone charger', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-em-general',
+          name: 'General must-haves',
+          items: [
+            { id: 'em30', text: 'Copy of itinerary & timeline', note: '', checked: false },
+            { id: 'em31', text: 'List of contact details for vendors & suppliers', note: '', checked: false },
+            { id: 'em32', text: 'Small amount of cash', note: '', checked: false },
+            { id: 'em33', text: 'Stylish bag to store everything', note: '', checked: false },
+            { id: 'em63', text: 'Distilled water', note: '', checked: false },
+            { id: 'em64', text: 'Bluetooth speaker', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-em-makeup',
+          name: 'Makeup touch-ups',
+          items: [
+            { id: 'em34', text: 'Eyeliner', note: '', checked: false },
+            { id: 'em35', text: 'Concealer', note: '', checked: false },
+            { id: 'em36', text: 'Lip balm', note: '', checked: false },
+            { id: 'em37', text: 'Lip gloss / stick', note: '', checked: false },
+            { id: 'em38', text: 'Lip pencil', note: '', checked: false },
+            { id: 'em39', text: 'Pencil sharpener', note: '', checked: false },
+            { id: 'em40', text: 'Setting powder', note: '', checked: false },
+            { id: 'em41', text: 'Setting spray', note: '', checked: false },
+            { id: 'em42', text: 'Eyelash glue', note: '', checked: false },
+            { id: 'em43', text: 'Oil blotting sheets', note: '', checked: false },
+            { id: 'em44', text: 'Makeup remover', note: '', checked: false },
+            { id: 'em45', text: 'Baby wipes / wet wipes', note: '', checked: false },
+          ]
+        },
+        {
+          id: 's-em-clothing',
+          name: 'Clothing & accessories',
+          items: [
+            { id: 'em46', text: 'Sewing kit (needles, thread, spare buttons, safety pins)', note: '', checked: false },
+            { id: 'em47', text: 'Fashion tape', note: '', checked: false },
+            { id: 'em48', text: 'Scissors', note: '', checked: false },
+            { id: 'em49', text: 'Stick-on hemming tape', note: '', checked: false },
+            { id: 'em50', text: 'Clear nail polish', note: '', checked: false },
+            { id: 'em51', text: 'White chalk (mask stains on dress)', note: '', checked: false },
+            { id: 'em52', text: 'Stain remover', note: '', checked: false },
+            { id: 'em53', text: 'Lint roller', note: '', checked: false },
+            { id: 'em56', text: 'Flat shoes (if changing shoes later)', note: '', checked: false },
+            { id: 'em57', text: 'Extra earring backs', note: '', checked: false },
+            { id: 'em58', text: 'Safety pins', note: '', checked: false },
+            { id: 'em59', text: 'Boob tape', note: '', checked: false },
+            { id: 'em62', text: 'Steamer', note: '', checked: false },
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let data;
+try {
+  const saved = localStorage.getItem('wedding-checklist-v2');
+  data = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_DATA));
+} catch (e) {
+  data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+function save() {
+  try { localStorage.setItem('wedding-checklist-v2', JSON.stringify(data)); } catch(e) {}
+}
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+function getList(id) { return data.lists.find(l => l.id === id); }
+function getSection(list, sid) { return list.sections.find(s => s.id === sid); }
+
+// ── Countdown ─────────────────────────────────────────────────────────────────
+function updateCountdown() {
+  const wedding = new Date('2026-10-14T00:00:00+10:00');
+  const now = new Date();
+  const diff = wedding - now;
+  const sub = document.getElementById('countdown-sub');
+  if (!sub) return;
+  if (diff <= 0) {
+    sub.textContent = '🎉 Today is the day!';
+    return;
+  }
+  const days = Math.ceil(diff / 86400000);
+  sub.textContent = days === 1 ? '1 day to go ✨' : `${days} days to go`;
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+// ── Progress ──────────────────────────────────────────────────────────────────
+function updateProgress(list) {
+  const wrap = document.getElementById('progress-wrap');
+  const bar = document.getElementById('progress-bar');
+  if (!wrap || !bar) return;
+  const items = list.sections.flatMap(s => s.items);
+  if (items.length === 0) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const pct = Math.round((items.filter(i => i.checked).length / items.length) * 100);
+  bar.style.width = pct + '%';
+}
+
+// ── Share button ──────────────────────────────────────────────────────────────
+function updateShareBtn(list) {
+  const btn = document.getElementById('share-btn');
+  if (!btn) return;
+  if (list && list.shareable) {
+    btn.classList.remove('hidden');
+  } else {
+    btn.classList.add('hidden');
+  }
+}
+
+document.getElementById('share-btn').addEventListener('click', () => {
+  const url = window.location.href.split('#')[0] + '?share=groom';
+  if (navigator.share) {
+    navigator.share({ title: "Liam's checklist", url }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => showToast('Link copied!')).catch(() => showToast('Copy the URL to share'));
+  } else {
+    showToast('Copy the URL from your browser to share');
+  }
+});
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Render tabs ───────────────────────────────────────────────────────────────
+function renderTabs() {
+  const container = document.getElementById('tabs-container');
+  container.innerHTML = '';
+
+  data.lists.forEach(list => {
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (list.builtin ? ' builtin' : '') + (list.id === data.activeList ? ' active' : '');
+    tab.role = 'tab';
+    tab.setAttribute('aria-selected', list.id === data.activeList);
+    tab.dataset.id = list.id;
+    tab.innerHTML = `<span>${list.icon || '📝'} ${list.name}</span>` +
+      (!list.builtin ? `<span class="tab-close ti ti-x" title="Delete list" aria-hidden="true"></span>` : '');
+
+    tab.addEventListener('click', (e) => {
+      const closeEl = e.target.closest('.tab-close');
+      if (closeEl) {
+        e.stopPropagation();
+        openConfirmList(list.id);
+        return;
+      }
+      data.activeList = list.id;
+      save();
+      renderTabs();
+      renderContent();
+    });
+    container.appendChild(tab);
+  });
+
+  // New list button
+  const newTab = document.createElement('button');
+  newTab.className = 'tab new-tab';
+  newTab.innerHTML = '<i class="ti ti-plus" aria-hidden="true"></i> New list';
+  newTab.addEventListener('click', () => openListSheet());
+  container.appendChild(newTab);
+}
+
+// ── Render content ────────────────────────────────────────────────────────────
+function renderContent() {
+  const content = document.getElementById('content');
+  const list = getList(data.activeList);
+  if (!list) { content.innerHTML = ''; return; }
+
+  updateProgress(list);
+  updateShareBtn(list);
+
+  if (list.sections.length === 0) {
+    content.innerHTML = `<div class="empty"><i class="ti ti-clipboard" aria-hidden="true"></i><p>No items yet.<br>Tap + to add one.</p></div>`;
+    return;
+  }
+
+  content.innerHTML = '';
+
+  list.sections.forEach((section) => {
+    // Section label row
+    const labelRow = document.createElement('div');
+    labelRow.style.display = 'flex';
+    labelRow.style.alignItems = 'center';
+    labelRow.style.justifyContent = 'space-between';
+    labelRow.style.marginTop = '14px';
+    labelRow.style.marginBottom = '6px';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    labelRow.appendChild(label);
+
+    const sectionActions = document.createElement('div');
+    sectionActions.style.display = 'flex';
+    sectionActions.style.gap = '4px';
+
+    const addToSection = document.createElement('button');
+    addToSection.className = 'item-btn';
+    addToSection.title = 'Add item to this section';
+    addToSection.innerHTML = '<i class="ti ti-plus" aria-hidden="true"></i>';
+    addToSection.addEventListener('click', () => openItemSheet(null, section.id));
+
+    const delSection = document.createElement('button');
+    delSection.className = 'item-btn danger';
+    delSection.title = 'Delete section';
+    delSection.innerHTML = '<i class="ti ti-trash" aria-hidden="true"></i>';
+    delSection.addEventListener('click', () => openConfirmSection(list.id, section.id));
+
+    sectionActions.appendChild(addToSection);
+    sectionActions.appendChild(delSection);
+    labelRow.appendChild(sectionActions);
+    content.appendChild(labelRow);
+
+    // Items
+    section.items.forEach((item) => {
+      content.appendChild(buildItemEl(list.id, section.id, item));
+    });
+
+    // Add item row at bottom of section
+    const addRow = document.createElement('div');
+    addRow.className = 'add-row';
+    addRow.setAttribute('role', 'button');
+    addRow.setAttribute('tabindex', '0');
+    addRow.innerHTML = '<i class="ti ti-plus" aria-hidden="true"></i> Add item';
+    addRow.addEventListener('click', () => openItemSheet(null, section.id));
+    addRow.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openItemSheet(null, section.id); });
+    content.appendChild(addRow);
+  });
+
+  // Add section button at bottom
+  const addSectionRow = document.createElement('div');
+  addSectionRow.className = 'add-row';
+  addSectionRow.style.borderColor = 'var(--sage)';
+  addSectionRow.style.color = 'var(--sage-dark)';
+  addSectionRow.style.marginTop = '14px';
+  addSectionRow.setAttribute('role', 'button');
+  addSectionRow.setAttribute('tabindex', '0');
+  addSectionRow.innerHTML = '<i class="ti ti-folder-plus" aria-hidden="true"></i> Add section';
+  addSectionRow.addEventListener('click', () => openSectionSheet(list.id));
+  addSectionRow.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSectionSheet(list.id); });
+  content.appendChild(addSectionRow);
+}
+
+// ── Build item element ────────────────────────────────────────────────────────
+function buildItemEl(listId, sectionId, item) {
+  const el = document.createElement('div');
+  el.className = 'item';
+  el.dataset.itemId = item.id;
+  el.draggable = true;
+
+  const checkBtn = document.createElement('button');
+  checkBtn.className = 'check-btn' + (item.checked ? ' checked' : '');
+  checkBtn.setAttribute('aria-label', item.checked ? 'Mark as not done' : 'Mark as done');
+  checkBtn.addEventListener('click', () => {
+    item.checked = !item.checked;
+    checkBtn.className = 'check-btn' + (item.checked ? ' checked' : '');
+    checkBtn.setAttribute('aria-label', item.checked ? 'Mark as not done' : 'Mark as done');
+    textEl.className = 'item-text' + (item.checked ? ' checked' : '');
+    save();
+    updateProgress(getList(listId));
+  });
+
+  const body = document.createElement('div');
+  body.className = 'item-body';
+
+  const textEl = document.createElement('div');
+  textEl.className = 'item-text' + (item.checked ? ' checked' : '');
+  textEl.textContent = item.text;
+  body.appendChild(textEl);
+
+  if (item.note) {
+    const noteEl = document.createElement('div');
+    noteEl.className = 'item-note';
+    noteEl.textContent = item.note;
+    body.appendChild(noteEl);
+  }
+
+  const actions = document.createElement('div');
+  actions.className = 'item-actions';
+
+  const moveWrap = document.createElement('div');
+  moveWrap.className = 'move-btns';
+
+  const upBtn = document.createElement('button');
+  upBtn.className = 'move-btn';
+  upBtn.setAttribute('aria-label', 'Move item up');
+  upBtn.innerHTML = '<i class="ti ti-chevron-up" aria-hidden="true"></i>';
+  upBtn.addEventListener('click', () => {
+    const list = getList(listId);
+    const section = getSection(list, sectionId);
+    const idx = section.items.findIndex(i => i.id === item.id);
+    if (idx <= 0) return;
+    section.items.splice(idx - 1, 0, section.items.splice(idx, 1)[0]);
+    save();
+    renderContent();
+  });
+
+  const downBtn = document.createElement('button');
+  downBtn.className = 'move-btn';
+  downBtn.setAttribute('aria-label', 'Move item down');
+  downBtn.innerHTML = '<i class="ti ti-chevron-down" aria-hidden="true"></i>';
+  downBtn.addEventListener('click', () => {
+    const list = getList(listId);
+    const section = getSection(list, sectionId);
+    const idx = section.items.findIndex(i => i.id === item.id);
+    if (idx >= section.items.length - 1) return;
+    section.items.splice(idx + 1, 0, section.items.splice(idx, 1)[0]);
+    save();
+    renderContent();
+  });
+
+  moveWrap.appendChild(upBtn);
+  moveWrap.appendChild(downBtn);
+
+  const editBtn = document.createElement('button');
+  editBtn.className = 'item-btn';
+  editBtn.setAttribute('aria-label', 'Edit item');
+  editBtn.innerHTML = '<i class="ti ti-pencil" aria-hidden="true"></i>';
+  editBtn.addEventListener('click', () => openItemSheet(item, sectionId));
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'item-btn danger';
+  delBtn.setAttribute('aria-label', 'Delete item');
+  delBtn.innerHTML = '<i class="ti ti-trash" aria-hidden="true"></i>';
+  delBtn.addEventListener('click', () => openConfirmItem(listId, sectionId, item.id));
+
+  actions.appendChild(moveWrap);
+  actions.appendChild(editBtn);
+  actions.appendChild(delBtn);
+
+  el.appendChild(checkBtn);
+  el.appendChild(body);
+  el.appendChild(actions);
+
+  // ── Drag & drop reorder ──
+  setupDrag(el, listId, sectionId);
+
+  return el;
+}
+
+// ── Drag & drop ───────────────────────────────────────────────────────────────
+let dragSrc = null;
+let dragSrcListId = null;
+let dragSrcSectionId = null;
+
+function setupDrag(el, listId, sectionId) {
+  el.addEventListener('dragstart', (e) => {
+    dragSrc = el;
+    dragSrcListId = listId;
+    dragSrcSectionId = sectionId;
+    el.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', el.dataset.itemId);
+  });
+  el.addEventListener('dragend', () => {
+    el.classList.remove('dragging');
+    document.querySelectorAll('.item.drag-over').forEach(i => i.classList.remove('drag-over'));
+  });
+  el.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if (dragSrc !== el) el.classList.add('drag-over');
+    e.dataTransfer.dropEffect = 'move';
+  });
+  el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+  el.addEventListener('drop', (e) => {
+    e.preventDefault();
+    el.classList.remove('drag-over');
+    if (!dragSrc || dragSrc === el) return;
+    if (dragSrcListId !== listId || dragSrcSectionId !== sectionId) return;
+
+    const list = getList(listId);
+    const section = getSection(list, sectionId);
+    const fromId = dragSrc.dataset.itemId;
+    const toId = el.dataset.itemId;
+    const fromIdx = section.items.findIndex(i => i.id === fromId);
+    const toIdx = section.items.findIndex(i => i.id === toId);
+    if (fromIdx === -1 || toIdx === -1) return;
+
+    const [moved] = section.items.splice(fromIdx, 1);
+    section.items.splice(toIdx, 0, moved);
+    save();
+    renderContent();
+  });
+
+  // Touch drag (simple press-hold-move)
+  let touchTimeout;
+  let touchMoveActive = false;
+  let touchStartY = 0;
+
+  el.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+    touchTimeout = setTimeout(() => {
+      touchMoveActive = true;
+      el.classList.add('dragging');
+    }, 400);
+  }, { passive: true });
+
+  el.addEventListener('touchmove', (e) => {
+    if (!touchMoveActive) { clearTimeout(touchTimeout); return; }
+    e.preventDefault();
+    const touch = e.touches[0];
+    const below = document.elementFromPoint(touch.clientX, touch.clientY);
+    const targetItem = below ? below.closest('.item') : null;
+    document.querySelectorAll('.item.drag-over').forEach(i => i.classList.remove('drag-over'));
+    if (targetItem && targetItem !== el) targetItem.classList.add('drag-over');
+  }, { passive: false });
+
+  el.addEventListener('touchend', (e) => {
+    clearTimeout(touchTimeout);
+    if (!touchMoveActive) return;
+    el.classList.remove('dragging');
+    touchMoveActive = false;
+
+    const touch = e.changedTouches[0];
+    const below = document.elementFromPoint(touch.clientX, touch.clientY);
+    const targetItem = below ? below.closest('.item') : null;
+    document.querySelectorAll('.item.drag-over').forEach(i => i.classList.remove('drag-over'));
+
+    if (!targetItem || targetItem === el) return;
+
+    const list = getList(listId);
+    const section = getSection(list, sectionId);
+    const fromId = el.dataset.itemId;
+    const toId = targetItem.dataset.itemId;
+    const fromIdx = section.items.findIndex(i => i.id === fromId);
+    const toIdx = section.items.findIndex(i => i.id === toId);
+    if (fromIdx === -1 || toIdx === -1) return;
+
+    const [moved] = section.items.splice(fromIdx, 1);
+    section.items.splice(toIdx, 0, moved);
+    save();
+    renderContent();
+  });
+}
+
+// ── Overlay helpers ───────────────────────────────────────────────────────────
+function openOverlay(id) {
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  el.addEventListener('click', (e) => { if (e.target === el) closeOverlay(id); }, { once: true });
+}
+function closeOverlay(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ── Item sheet ────────────────────────────────────────────────────────────────
+let editingItem = null;
+let editingSectionId = null;
+let editingListIdForFab = null;
+
+function openItemSheet(item, sectionId) {
+  editingItem = item;
+  editingSectionId = sectionId;
+  editingListIdForFab = data.activeList;
+
+  const title = document.getElementById('item-sheet-title');
+  const input = document.getElementById('item-input');
+  const note = document.getElementById('note-input');
+
+  title.textContent = item ? 'Edit item' : 'Add item';
+  input.value = item ? item.text : '';
+  note.value = item ? (item.note || '') : '';
+
+  openOverlay('item-overlay');
+  setTimeout(() => input.focus(), 300);
+}
+
+document.getElementById('item-cancel').addEventListener('click', () => closeOverlay('item-overlay'));
+document.getElementById('item-save').addEventListener('click', () => {
+  const text = document.getElementById('item-input').value.trim();
+  if (!text) return;
+  const note = document.getElementById('note-input').value.trim();
+
+  const list = getList(editingListIdForFab);
+  const section = getSection(list, editingSectionId);
+
+  if (editingItem) {
+    editingItem.text = text;
+    editingItem.note = note;
+  } else {
+    section.items.push({ id: uid(), text, note, checked: false });
+  }
+
+  save();
+  renderContent();
+  closeOverlay('item-overlay');
+});
+
+document.getElementById('item-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('item-save').click();
+});
+
+// ── FAB ───────────────────────────────────────────────────────────────────────
+document.getElementById('fab').addEventListener('click', () => {
+  const list = getList(data.activeList);
+  if (!list || list.sections.length === 0) {
+    openSectionSheet(data.activeList);
+    return;
+  }
+  // Open item sheet targeting last section
+  const lastSection = list.sections[list.sections.length - 1];
+  openItemSheet(null, lastSection.id);
+});
+
+// ── Section sheet ─────────────────────────────────────────────────────────────
+let sectionTargetListId = null;
+
+function openSectionSheet(listId) {
+  sectionTargetListId = listId;
+  document.getElementById('section-input').value = '';
+  openOverlay('section-overlay');
+  setTimeout(() => document.getElementById('section-input').focus(), 300);
+}
+
+document.getElementById('section-cancel').addEventListener('click', () => closeOverlay('section-overlay'));
+document.getElementById('section-save').addEventListener('click', () => {
+  const name = document.getElementById('section-input').value.trim();
+  if (!name) return;
+  const list = getList(sectionTargetListId);
+  list.sections.push({ id: uid(), name, items: [] });
+  save();
+  renderContent();
+  closeOverlay('section-overlay');
+});
+document.getElementById('section-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('section-save').click();
+});
+
+// ── New list sheet ────────────────────────────────────────────────────────────
+function openListSheet() {
+  document.getElementById('list-input').value = '';
+  openOverlay('list-overlay');
+  setTimeout(() => document.getElementById('list-input').focus(), 300);
+}
+
+document.getElementById('list-cancel').addEventListener('click', () => closeOverlay('list-overlay'));
+document.getElementById('list-save').addEventListener('click', () => {
+  const name = document.getElementById('list-input').value.trim();
+  if (!name) return;
+  const id = uid();
+  data.lists.push({ id, name, icon: '📝', builtin: false, shareable: false, sections: [] });
+  data.activeList = id;
+  save();
+  renderTabs();
+  renderContent();
+  closeOverlay('list-overlay');
+  showToast(`"${name}" created`);
+  // Prompt to add first section
+  setTimeout(() => openSectionSheet(id), 350);
+});
+document.getElementById('list-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('list-save').click();
+});
+
+// ── Confirm delete item ───────────────────────────────────────────────────────
+let pendingDeleteItem = null;
+
+function openConfirmItem(listId, sectionId, itemId) {
+  pendingDeleteItem = { listId, sectionId, itemId };
+  const list = getList(listId);
+  const section = getSection(list, sectionId);
+  const item = section.items.find(i => i.id === itemId);
+  document.getElementById('confirm-item-name').textContent = `"${item.text}"`;
+  openOverlay('confirm-item-overlay');
+}
+
+document.getElementById('confirm-item-cancel').addEventListener('click', () => closeOverlay('confirm-item-overlay'));
+document.getElementById('confirm-item-ok').addEventListener('click', () => {
+  if (!pendingDeleteItem) return;
+  const { listId, sectionId, itemId } = pendingDeleteItem;
+  const list = getList(listId);
+  const section = getSection(list, sectionId);
+  section.items = section.items.filter(i => i.id !== itemId);
+  save();
+  renderContent();
+  closeOverlay('confirm-item-overlay');
+  pendingDeleteItem = null;
+});
+
+// ── Confirm delete section ────────────────────────────────────────────────────
+let pendingDeleteSection = null;
+
+function openConfirmSection(listId, sectionId) {
+  pendingDeleteSection = { listId, sectionId };
+  const list = getList(listId);
+  const section = getSection(list, sectionId);
+  document.getElementById('confirm-section-name').textContent = `"${section.name}"`;
+  openOverlay('confirm-section-overlay');
+}
+
+document.getElementById('confirm-section-cancel').addEventListener('click', () => closeOverlay('confirm-section-overlay'));
+document.getElementById('confirm-section-ok').addEventListener('click', () => {
+  if (!pendingDeleteSection) return;
+  const { listId, sectionId } = pendingDeleteSection;
+  const list = getList(listId);
+  list.sections = list.sections.filter(s => s.id !== sectionId);
+  save();
+  renderContent();
+  closeOverlay('confirm-section-overlay');
+  pendingDeleteSection = null;
+});
+
+// ── Confirm delete list ───────────────────────────────────────────────────────
+let pendingDeleteList = null;
+
+function openConfirmList(listId) {
+  pendingDeleteList = listId;
+  const list = getList(listId);
+  document.getElementById('confirm-list-name').textContent = `"${list.name}"`;
+  openOverlay('confirm-list-overlay');
+}
+
+document.getElementById('confirm-list-cancel').addEventListener('click', () => closeOverlay('confirm-list-overlay'));
+document.getElementById('confirm-list-ok').addEventListener('click', () => {
+  if (!pendingDeleteList) return;
+  data.lists = data.lists.filter(l => l.id !== pendingDeleteList);
+  if (data.activeList === pendingDeleteList || !getList(data.activeList)) {
+    data.activeList = data.lists[0]?.id || '';
+  }
+  save();
+  renderTabs();
+  renderContent();
+  closeOverlay('confirm-list-overlay');
+  pendingDeleteList = null;
+});
+
+// ── Share / Groom-only mode ───────────────────────────────────────────────────
+function checkShareMode() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('share') === 'groom') {
+    // Lock to groom list, hide edit controls
+    data.activeList = 'groom';
+    document.getElementById('fab').style.display = 'none';
+    document.getElementById('share-btn').style.display = 'none';
+    document.querySelector('.tabs-wrap').style.display = 'none';
+    // Override header
+    document.querySelector('.header-title').textContent = "Liam's checklist";
+  }
+}
+checkShareMode();
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderTabs();
+renderContent();
+
+// ── Pull to refresh ──────────────────────────────────────────────────────────
+(function() {
+  const content = document.getElementById('content');
+  const indicator = document.getElementById('ptr-indicator');
+  const label = document.getElementById('ptr-label');
+  const spinner = document.getElementById('ptr-spinner');
+  const THRESHOLD = 72; // px to pull before triggering
+  let startY = 0;
+  let pulling = false;
+  let refreshing = false;
+
+  content.addEventListener('touchstart', (e) => {
+    if (refreshing) return;
+    if (content.scrollTop === 0) {
+      startY = e.touches[0].clientY;
+      pulling = true;
+    }
+  }, { passive: true });
+
+  content.addEventListener('touchmove', (e) => {
+    if (!pulling || refreshing) return;
+    const dy = e.touches[0].clientY - startY;
+    if (dy <= 0) { pulling = false; return; }
+    const pull = Math.min(dy * 0.4, THRESHOLD * 1.2);
+    indicator.style.height = pull + 'px';
+    spinner.style.transform = `rotate(${(pull / THRESHOLD) * 180}deg)`;
+    if (pull >= THRESHOLD * 0.85) {
+      indicator.classList.add('ready');
+      label.textContent = 'Release to refresh';
+    } else {
+      indicator.classList.remove('ready');
+      label.textContent = 'Pull to refresh';
+    }
+    indicator.classList.add('visible');
+  }, { passive: true });
+
+  content.addEventListener('touchend', () => {
+    if (!pulling || refreshing) return;
+    pulling = false;
+    const h = parseInt(indicator.style.height) || 0;
+    if (h >= THRESHOLD * 0.85) {
+      refreshing = true;
+      indicator.style.height = '48px';
+      indicator.classList.add('refreshing');
+      label.textContent = 'Refreshing…';
+      setTimeout(() => window.location.reload(), 400);
+    } else {
+      indicator.style.height = '0';
+      indicator.classList.remove('visible', 'ready');
+    }
+  }, { passive: true });
+})();
+
+// No service worker here. Actively remove any leftover ones from the old
+// paths and wipe their caches so nothing stale can ever be served again.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations()
+    .then(regs => regs.forEach(r => r.unregister()))
+    .catch(() => {});
+}
+if (window.caches && caches.keys) {
+  caches.keys().then(keys => keys.forEach(k => caches.delete(k))).catch(() => {});
+}
+</script>
+</body>
+</html>
