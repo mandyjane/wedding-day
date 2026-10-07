@@ -693,6 +693,7 @@ const DEFAULT_DATA = {
             { id: 'w4', text: 'Bath Leo', note: '', checked: false },
             { id: 'w5', text: "Write Liam's wedding day card", note: '', checked: false },
             { id: 'w6', text: "Wrap Liam's wedding day present", note: '', checked: false },
+            { id: 'w7', text: 'Tell Jack where present is to give to Liam', note: '', checked: false },
           ]
         },
         {
@@ -833,7 +834,7 @@ const DEFAULT_DATA = {
           name: 'Florals',
           items: [
             { id: 'i5', text: 'Boutonniere', note: 'Pin to your left side. One each for you and your groomsmen.', checked: false },
-            { id: 'i6', text: "Boutonniere for Dad", note: '', checked: false },
+            { id: 'i6', text: "Boutonniere for Dad", note: "Remember to bring if he won't be at the house during getting ready.", checked: false },
           ]
         }
       ]
@@ -1055,6 +1056,7 @@ try {
         { id: 'w4', text: 'Bath Leo' },
         { id: 'w5', text: "Write Liam's wedding day card" },
         { id: 'w6', text: "Wrap Liam's wedding day present" },
+        { id: 'w7', text: 'Tell Jack where present is to give to Liam' },
       ];
       adds.forEach(a => {
         if (!weekTodo.items.some(i => i.id === a.id)) {
@@ -1062,12 +1064,18 @@ try {
         }
       });
     }
-    // Add note to Groom's Boutonniere if it has none yet
+    // Add notes to Groom's florals if they have none yet
     const groom = data.lists && data.lists.find(l => l.id === 'groom');
     const gFlorals = groom && groom.sections.find(s => s.id === 's-groom-florals');
-    const bout = gFlorals && gFlorals.items.find(i => i.id === 'i5');
-    if (bout && !bout.note) {
-      bout.note = 'Pin to your left side. One each for you and your groomsmen.';
+    if (gFlorals) {
+      const bout = gFlorals.items.find(i => i.id === 'i5');
+      if (bout && !bout.note) {
+        bout.note = 'Pin to your left side. One each for you and your groomsmen.';
+      }
+      const dadBout = gFlorals.items.find(i => i.id === 'i6');
+      if (dadBout && !dadBout.note) {
+        dadBout.note = "Remember to bring if he won't be at the house during getting ready.";
+      }
     }
   } catch (e) {}
 })();
