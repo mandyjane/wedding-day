@@ -165,6 +165,19 @@
   }
   .lyric .bracket { color: var(--gold); font-weight: 600; font-style: normal; }
 
+  /* Inline lyric line sitting between the step rows */
+  .lyric-row {
+    display: grid; grid-template-columns: 62px 1fr; gap: 12px;
+    align-items: baseline;
+  }
+  .lyric-row .lyric-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-faint); text-align: right;
+  }
+  .lyric-row .lyric {
+    padding: 2px 0;
+  }
+
   .gap-note {
     font-size: 11px; color: var(--ink-faint); font-style: italic;
     margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--rule);
@@ -214,9 +227,9 @@
   </div>
 
   <div class="howto">
-    <strong>Before you print:</strong> each card has an empty <strong>Cue line</strong> with brackets <span style="color:var(--gold);font-weight:600;">[ &nbsp; ]</span> — open this file and type the lyric line you'll hear at that cue between the brackets. (Search the file for the word <strong>TYPE</strong> to jump to each spot.)
+    <strong>Before you print:</strong> each card has two empty <strong>Lyric</strong> rows with brackets <span style="color:var(--gold);font-weight:600;">[ &nbsp; ]</span> — one above <em>Descend stairs</em> and one above <em>Walk aisle</em>. Open this file and type the line you'll hear at each cue between the brackets. (Search the file for the word <strong>TYPE</strong> to jump to each spot — there are two per person.)
     <br><br>
-    <strong>On the day:</strong> there's no timer — cue by <strong>listening to the song</strong>. When you hear each person's cue line, send them: first to <strong>descend the stairs</strong>, then to <strong>start down the aisle</strong>. Times are a rough guide only.
+    <strong>On the day:</strong> there's no timer — cue by <strong>listening to the song</strong>. When you hear the lyric above each step, send that person to <strong>descend the stairs</strong>, then to <strong>walk the aisle</strong>. Times are a rough guide only.
   </div>
 
   <!-- Riley -->
@@ -227,19 +240,18 @@
       <span class="cue-role">Flower Girl</span>
     </div>
     <div class="cue-steps">
+      <!-- ▼ TYPE the lyric line RILEY hears to DESCEND STAIRS, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">0:27</span>
         <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 8 sec</span></span>
       </div>
+      <!-- ▼ TYPE the lyric line RILEY hears to WALK AISLE, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">0:35</span>
         <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 11 sec to next</span></span>
       </div>
-    </div>
-    <div class="listen">
-      <span class="lbl">Cue line</span>
-      <!-- ▼▼▼ TYPE RILEY'S LYRIC LINE BETWEEN THE BRACKETS BELOW ▼▼▼ -->
-      <span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span>
     </div>
   </div>
 
@@ -251,19 +263,18 @@
       <span class="cue-role">Flower Girl</span>
     </div>
     <div class="cue-steps">
+      <!-- ▼ TYPE the lyric line SAGE hears to DESCEND STAIRS, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">0:44</span>
         <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 7 sec</span></span>
       </div>
+      <!-- ▼ TYPE the lyric line SAGE hears to WALK AISLE, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">0:51</span>
         <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 15 sec to next</span></span>
       </div>
-    </div>
-    <div class="listen">
-      <span class="lbl">Cue line</span>
-      <!-- ▼▼▼ TYPE SAGE'S LYRIC LINE BETWEEN THE BRACKETS BELOW ▼▼▼ -->
-      <span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span>
     </div>
   </div>
 
@@ -272,22 +283,21 @@
     <div class="cue-head">
       <span class="cue-order">3rd</span>
       <span class="cue-name">Aria</span>
-      <span class="cue-role">Flower Girl</span>
+      <span class="cue-role">Bridesmaid / Flower Girl</span>
     </div>
     <div class="cue-steps">
+      <!-- ▼ TYPE the lyric line ARIA hears to DESCEND STAIRS, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">1:06</span>
         <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 6 sec</span></span>
       </div>
+      <!-- ▼ TYPE the lyric line ARIA hears to WALK AISLE, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">1:10</span>
         <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 17 sec to next</span></span>
       </div>
-    </div>
-    <div class="listen">
-      <span class="lbl">Cue line</span>
-      <!-- ▼▼▼ TYPE ARIA'S LYRIC LINE BETWEEN THE BRACKETS BELOW ▼▼▼ -->
-      <span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span>
     </div>
   </div>
 
@@ -299,19 +309,18 @@
       <span class="cue-role">Bridesmaid</span>
     </div>
     <div class="cue-steps">
+      <!-- ▼ TYPE the lyric line LAUREN hears to DESCEND STAIRS, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">1:27</span>
         <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 6 sec</span></span>
       </div>
+      <!-- ▼ TYPE the lyric line LAUREN hears to WALK AISLE, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">1:33</span>
         <span class="step-action"><span class="big">Walk aisle</span><span class="dur">then 36 sec to next</span></span>
       </div>
-    </div>
-    <div class="listen">
-      <span class="lbl">Cue line</span>
-      <!-- ▼▼▼ TYPE LAUREN'S LYRIC LINE BETWEEN THE BRACKETS BELOW ▼▼▼ -->
-      <span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span>
     </div>
   </div>
 
@@ -323,19 +332,18 @@
       <span class="cue-role">The Bride</span>
     </div>
     <div class="cue-steps">
+      <!-- ▼ TYPE the lyric line AMANDA hears to DESCEND STAIRS, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">2:09</span>
         <span class="step-action"><span class="big">Descend stairs</span><span class="dur">then 17 sec</span></span>
       </div>
+      <!-- ▼ TYPE the lyric line AMANDA hears to WALK AISLE, between the brackets ▼ -->
+      <div class="lyric-row"><span class="lyric-tag">Lyric</span><span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span></div>
       <div class="step">
         <span class="step-time">2:26</span>
         <span class="step-action"><span class="big">Walk aisle</span><span class="dur">40 sec of aisle</span></span>
       </div>
-    </div>
-    <div class="listen">
-      <span class="lbl">Cue line</span>
-      <!-- ▼▼▼ TYPE AMANDA'S LYRIC LINE BETWEEN THE BRACKETS BELOW ▼▼▼ -->
-      <span class="lyric"><span class="bracket">[</span> &nbsp; <span class="bracket">]</span></span>
     </div>
     <div class="gap-note">Longest walk — the big moment. Give Amanda the full 17-second pause at the top of the stairs before stepping onto the aisle.</div>
   </div>
