@@ -842,7 +842,7 @@ const DEFAULT_DATA = {
       name: 'Wedding Décor',
       icon: '✨',
       builtin: true,
-      shareable: false,
+      shareable: true,
       sections: [
         {
           id: 's-florals',
@@ -1044,6 +1044,9 @@ try {
     if (bride) {
       bride.sections = bride.sections.filter(s => s.id !== 's-bride-emergency');
     }
+    // Make Wedding Décor shareable
+    const decor = data.lists && data.lists.find(l => l.id === 'decor');
+    if (decor) { decor.shareable = true; }
   } catch (e) {}
 })();
 
@@ -1099,9 +1102,13 @@ function updateShareBtn(list) {
 }
 
 document.getElementById('share-btn').addEventListener('click', () => {
-  const url = window.location.href.split('#')[0] + '?share=groom';
+  const list = getList(data.activeList);
+  if (!list || !list.shareable) return;
+  const base = window.location.href.split('#')[0].split('?')[0];
+  const url = base + '?share=' + list.id;
+  const title = list.id === 'groom' ? "Liam's checklist" : list.name;
   if (navigator.share) {
-    navigator.share({ title: "Liam's checklist", url }).catch(() => {});
+    navigator.share({ title, url }).catch(() => {});
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(() => showToast('Link copied!')).catch(() => showToast('Copy the URL to share'));
   } else {
@@ -1620,18 +1627,21 @@ document.getElementById('confirm-list-ok').addEventListener('click', () => {
   pendingDeleteList = null;
 });
 
-// ── Share / Groom-only mode ───────────────────────────────────────────────────
+// ── Share mode: lock to one list, check-off only ──────────────────────────────
 function checkShareMode() {
   const params = new URLSearchParams(window.location.search);
-  if (params.get('share') === 'groom') {
-    // Lock to groom list, hide edit controls
-    data.activeList = 'groom';
-    document.getElementById('fab').style.display = 'none';
-    document.getElementById('share-btn').style.display = 'none';
-    document.querySelector('.tabs-wrap').style.display = 'none';
-    // Override header
-    document.querySelector('.header-title').textContent = "Liam's checklist";
-  }
+  const shareId = params.get('share');
+  if (!shareId) return;
+  const list = getList(shareId);
+  if (!list || !list.shareable) return;
+  // Lock to this list, hide edit controls
+  data.activeList = shareId;
+  document.getElementById('fab').style.display = 'none';
+  document.getElementById('share-btn').style.display = 'none';
+  document.querySelector('.tabs-wrap').style.display = 'none';
+  // Override header
+  document.querySelector('.header-title').textContent =
+    shareId === 'groom' ? "Liam's checklist" : list.name;
 }
 checkShareMode();
 
