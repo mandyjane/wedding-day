@@ -1,0 +1,586 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Wedding Morning Timeline</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
+
+<style>
+  /* Palette */
+  :root {
+    --bg:           #faf9f7;
+    --bg-card:      #ffffff;
+    --fg:           #2c2825;
+    --fg-muted:     #7a7068;
+    --rule:         #e5e0d8;
+    --sophy:        #8b6f6f;
+    --sophy-soft:   #f5edec;
+    --milly:        #6f7e8b;
+    --milly-soft:   #edf1f5;
+    --flower:       #8b7e6f;
+    --accent:       #a08060;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Jost', system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:         #1a1816;
+      --bg-card:    #242220;
+      --fg:         #ede8e2;
+      --fg-muted:   #8a8078;
+      --rule:       #343028;
+      --sophy:      #c49a9a;
+      --sophy-soft: #2a1c1c;
+      --milly:      #9aafc4;
+      --milly-soft: #182030;
+      --flower:     #c4b09a;
+      --accent:     #c4a070;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:         #1a1816;
+    --bg-card:    #242220;
+    --fg:         #ede8e2;
+    --fg-muted:   #8a8078;
+    --rule:       #343028;
+    --sophy:      #c49a9a;
+    --sophy-soft: #2a1c1c;
+    --milly:      #9aafc4;
+    --milly-soft: #182030;
+    --flower:     #c4b09a;
+    --accent:     #c4a070;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 28px 16px 52px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 7vw, 44px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.1;
+    margin: 0 0 6px;
+  }
+  .page-sub {
+    font-size: 12px;
+    color: var(--fg-muted);
+    letter-spacing: .05em;
+  }
+
+  /* ── Chips ── */
+  .chips {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    font-size: 12px;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    max-width: 560px;
+    margin: 0 auto 28px;
+  }
+  .legend-card {
+    padding: 13px 15px;
+    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+  }
+  .legend-card.s { border-left: 3px solid var(--sophy); }
+  .legend-card.m { border-left: 3px solid var(--milly); }
+  .legend-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 3px;
+  }
+  .legend-clients { font-size: 11px; color: var(--fg-muted); }
+
+  /* ══════════════════════════════════════════
+     PROPORTIONAL TIMELINE
+     1 min = 3px  |  10:15–1:45 = 210 min = 630px
+     top  = (minutes since 10:15) × 3
+     height = duration × 3  (−3px gap between adjacent blocks)
+  ══════════════════════════════════════════ */
+  .tl-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* header row */
+  .tl-head {
+    display: grid;
+    grid-template-columns: 48px 1fr 1fr;
+    gap: 0 8px;
+    margin-bottom: 8px;
+  }
+  .tl-head-cell {
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--fg-muted);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tl-head-cell.center { text-align: center; }
+
+  /* body: axis + two columns side by side */
+  .tl-body {
+    display: grid;
+    grid-template-columns: 48px 1fr 1fr;
+    gap: 0 8px;
+    /* total height = 210 min × 3px */
+    height: 630px;
+    position: relative;
+  }
+
+  /* axis column */
+  .tl-axis {
+    position: relative;
+    height: 630px;
+  }
+  .tick {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .tick-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    letter-spacing: .03em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+  /* tick mark extending into content area */
+  .tick::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    width: 10px;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* artist columns */
+  .tl-col {
+    position: relative;
+    height: 630px;
+  }
+
+  /* each appointment block */
+  .appt {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 7px;
+    padding: 9px 11px;
+    overflow: hidden;
+    border-left: 3px solid transparent;
+  }
+  .appt.sophy-flower { background: var(--sophy-soft); border-color: var(--flower); }
+  .appt.sophy-bride  { background: var(--sophy-soft); border-color: var(--sophy); }
+  .appt.milly-flower { background: var(--milly-soft); border-color: var(--flower); }
+  .appt.milly-bride  { background: var(--milly-soft); border-color: var(--milly); }
+
+  .appt-name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+  .appt-detail {
+    font-size: 11px;
+    line-height: 1.35;
+    opacity: .72;
+  }
+  .appt-dur {
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 4px;
+    opacity: .55;
+  }
+
+  /* break slot */
+  .break-slot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .break-slot span {
+    font-size: 8px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    opacity: .45;
+  }
+
+  /* free slot */
+  .free {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 7px;
+    border: 1.5px dashed var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .free span {
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    opacity: .5;
+  }
+
+  /* finish labels */
+  .tl-finish {
+    display: grid;
+    grid-template-columns: 48px 1fr 1fr;
+    gap: 0 8px;
+    max-width: 680px;
+    margin: 6px auto 0;
+  }
+  .finish-label {
+    font-size: 10px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 4px 0;
+    border-top: 1px dashed currentColor;
+    text-align: center;
+    opacity: .75;
+  }
+
+  /* ── After-timeline blocks ── */
+  .after-wrap {
+    max-width: 680px;
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .event-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 15px;
+    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+  }
+  .event-row.ceremony { border-color: var(--accent); }
+  .event-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    min-width: 80px;
+  }
+  .event-time.ceremony { color: var(--accent); }
+  .event-icon { font-size: 17px; flex-shrink: 0; }
+  .event-label {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.2;
+  }
+  .event-note { font-size: 11px; color: var(--fg-muted); margin-top: 1px; }
+
+  /* ── Notes ── */
+  .notes {
+    max-width: 680px;
+    margin: 24px auto 0;
+    padding: 18px 18px;
+    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+  }
+  .notes-heading {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .notes ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .notes li {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  .nb {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  @media (max-width: 480px) {
+    .legend { grid-template-columns: 1fr; }
+    .tl-head { grid-template-columns: 38px 1fr 1fr; gap: 0 5px; }
+    .tl-body { grid-template-columns: 38px 1fr 1fr; gap: 0 5px; }
+    .tl-finish { grid-template-columns: 38px 1fr 1fr; gap: 0 5px; }
+    .appt { padding: 7px 8px; }
+    .appt-name { font-size: 13px; }
+    .appt-detail { font-size: 10px; }
+  }
+</style>
+
+<!-- ── Page header ── -->
+<div class="page-header">
+  <div class="eyebrow">14 October 2026 · Hillstone St Lucia</div>
+  <h1 class="page-title">Wedding Morning</h1>
+  <div class="page-sub">Hair &amp; Makeup Schedule &nbsp;·&nbsp; 10:15 AM – 1:45 PM</div>
+</div>
+
+<!-- ── Chips ── -->
+<div class="chips">
+  <div class="chip"><span class="dot" style="background:var(--sophy)"></span>Sophy — 2 people</div>
+  <div class="chip"><span class="dot" style="background:var(--milly)"></span>Milly — 3 people</div>
+  <div class="chip"><span class="dot" style="background:var(--accent)"></span>Ceremony 4:00 PM</div>
+</div>
+
+<!-- ── Legend ── -->
+<div class="legend">
+  <div class="legend-card s">
+    <div class="legend-name">Sophy</div>
+    <div class="legend-clients">Riley (flower girl) · Mandy (bride)</div>
+  </div>
+  <div class="legend-card m">
+    <div class="legend-name">Milly</div>
+    <div class="legend-clients">Aria · Sage (flower girls) · Lauren (bridesmaid)</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     PROPORTIONAL TIMELINE
+     Scale: 3px per minute
+     Origin: 10:15 AM = 0 min
+     10-min breaks between blocks. Flower girls 55 min.
+
+     SOPHY:
+       Riley     0–55 min    top:0      h:162px (55×3−3)
+       Break    55–65 min    top:165    h:30px
+       Mandy H  65–125 min   top:195    h:177px
+       Break   125–135 min   top:375    h:30px
+       Mandy MU 135–180 min  top:405    h:132px (45×3−3)
+       Free    180–210 min   top:540    h:90px
+
+     MILLY:
+       Aria       0–55 min   top:0      h:162px
+       Break     55–65 min   top:165    h:30px
+       Sage      65–120 min  top:195    h:162px
+       Break    120–130 min  top:360    h:30px
+       Lauren   130–205 min  top:390    h:222px (75×3−3)
+       Free     205–210 min  top:615    h:15px
+══════════════════════════ -->
+
+<div class="tl-wrap">
+
+  <!-- Column headers -->
+  <div class="tl-head">
+    <div class="tl-head-cell center">Time</div>
+    <div class="tl-head-cell" style="padding-left:4px;color:var(--sophy)">Sophy</div>
+    <div class="tl-head-cell" style="padding-left:4px;color:var(--milly)">Milly</div>
+  </div>
+
+  <!-- Timeline body -->
+  <div class="tl-body">
+
+    <!-- Time axis -->
+    <div class="tl-axis">
+      <div class="tick" style="top:0px">    <span class="tick-label">10:15</span></div>
+      <div class="tick" style="top:135px">  <span class="tick-label">11:00</span></div>
+      <div class="tick" style="top:165px">  <span class="tick-label">11:10</span></div>
+      <div class="tick" style="top:195px">  <span class="tick-label">11:20</span></div>
+      <div class="tick" style="top:360px">  <span class="tick-label">12:15</span></div>
+      <div class="tick" style="top:390px">  <span class="tick-label">12:25</span></div>
+      <div class="tick" style="top:405px">  <span class="tick-label">12:30</span></div>
+      <div class="tick" style="top:540px">  <span class="tick-label">1:15</span></div>
+      <div class="tick" style="top:615px">  <span class="tick-label">1:40</span></div>
+      <div class="tick" style="top:630px">  <span class="tick-label">1:45</span></div>
+    </div>
+
+    <!-- Sophy column -->
+    <div class="tl-col">
+      <!-- Riley: 0–55 min → top:0, h:162 -->
+      <div class="appt sophy-flower" style="top:0; height:162px;">
+        <div class="appt-name">Riley</div>
+        <div class="appt-detail">Hair updo + mascara, eyeshadow, blush &amp; lipgloss</div>
+        <div class="appt-dur">55 min</div>
+      </div>
+      <!-- Break: 55–65 min → top:165, h:30 -->
+      <div class="break-slot" style="top:165px; height:30px;"><span>Break</span></div>
+      <!-- Mandy Hair: 65–125 min → top:195, h:177 -->
+      <div class="appt sophy-bride" style="top:195px; height:177px;">
+        <div class="appt-name">Mandy</div>
+        <div class="appt-detail">Hair updo — full bridal style</div>
+        <div class="appt-dur">60 min</div>
+      </div>
+      <!-- Break: 125–135 min → top:375, h:30 -->
+      <div class="break-slot" style="top:375px; height:30px;"><span>Break</span></div>
+      <!-- Mandy Makeup: 135–180 min → top:405, h:132 -->
+      <div class="appt sophy-bride" style="top:405px; height:132px;">
+        <div class="appt-name">Mandy</div>
+        <div class="appt-detail">Full bridal makeup</div>
+        <div class="appt-dur">45 min</div>
+      </div>
+      <!-- Free: 180–210 min → top:540, h:90 -->
+      <div class="free" style="top:540px; height:90px;">
+        <span>Free</span>
+      </div>
+    </div>
+
+    <!-- Milly column -->
+    <div class="tl-col">
+      <!-- Aria: 0–55 min → top:0, h:162 -->
+      <div class="appt milly-flower" style="top:0; height:162px;">
+        <div class="appt-name">Aria</div>
+        <div class="appt-detail">Hair updo + mascara, eyeshadow, blush &amp; lipgloss</div>
+        <div class="appt-dur">55 min</div>
+      </div>
+      <!-- Break: 55–65 min → top:165, h:30 -->
+      <div class="break-slot" style="top:165px; height:30px;"><span>Break</span></div>
+      <!-- Sage: 65–120 min → top:195, h:162 -->
+      <div class="appt milly-flower" style="top:195px; height:162px;">
+        <div class="appt-name">Sage</div>
+        <div class="appt-detail">Hair updo + mascara, eyeshadow, blush &amp; lipgloss</div>
+        <div class="appt-dur">55 min</div>
+      </div>
+      <!-- Break: 120–130 min → top:360, h:30 -->
+      <div class="break-slot" style="top:360px; height:30px;"><span>Break</span></div>
+      <!-- Lauren: 130–205 min → top:390, h:222 -->
+      <div class="appt milly-bride" style="top:390px; height:222px;">
+        <div class="appt-name">Lauren</div>
+        <div class="appt-detail">Hair down + full makeup</div>
+        <div class="appt-dur">75 min</div>
+      </div>
+      <!-- Free: 205–210 min → top:615, h:15 -->
+      <div class="free" style="top:615px; height:15px;"></div>
+    </div>
+
+  </div><!-- end tl-body -->
+
+  <!-- Finish labels -->
+  <div class="tl-finish">
+    <div></div>
+    <div class="finish-label" style="color:var(--sophy)">Done 1:15 PM</div>
+    <div class="finish-label" style="color:var(--milly)">Done 1:40 PM</div>
+  </div>
+
+  <!-- After-timeline events -->
+  <div class="after-wrap">
+    <div class="event-row">
+      <div class="event-time">1:15 – 1:45</div>
+      <div class="event-icon">👗</div>
+      <div>
+        <div class="event-label">Getting Dressed</div>
+        <div class="event-note">Sophy free from 1:15, Milly from 1:40 — help with dresses, buttons &amp; bustle</div>
+      </div>
+    </div>
+    <div class="event-row">
+      <div class="event-time">1:45 – 2:45</div>
+      <div class="event-icon">📸</div>
+      <div>
+        <div class="event-label">Bridal Party Photos</div>
+        <div class="event-note">All five ready — full group &amp; individual portraits</div>
+      </div>
+    </div>
+    <div class="event-row">
+      <div class="event-time">2:45 – 3:30</div>
+      <div class="event-icon">🥂</div>
+      <div>
+        <div class="event-label">Rest &amp; Refresh</div>
+        <div class="event-note">Touch-ups, calm before the ceremony</div>
+      </div>
+    </div>
+    <div class="event-row ceremony">
+      <div class="event-time ceremony">4:00 PM</div>
+      <div class="event-icon">💍</div>
+      <div>
+        <div class="event-label" style="font-size:18px">Ceremony Begins</div>
+        <div class="event-note">Hillstone St Lucia — courtyard garden</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="notes">
+    <div class="notes-heading">Scheduling Notes</div>
+    <ul>
+      <li><span class="nb"></span><span><strong>Sophy</strong> does Riley (10:15–11:10), 10-min break, Mandy hair (11:20–12:20), 10-min break, Mandy makeup (12:30–1:15) — free from 1:15 PM.</span></li>
+      <li><span class="nb"></span><span><strong>Milly</strong> does Aria (10:15–11:10), 10-min break, Sage (11:20–12:15), 10-min break, Lauren (12:25–1:40) — free from 1:40 PM.</span></li>
+      <li><span class="nb"></span><span>Flower girls are each allocated 55 min — hair updo plus mascara, eyeshadow, blush &amp; lipgloss.</span></li>
+      <li><span class="nb"></span><span>Lauren gets hair down + full makeup with Milly, 75 min total.</span></li>
+      <li><span class="nb"></span><span>10-min breaks between every appointment — time to freshen up, tidy the space, and prepare for the next person.</span></li>
+    </ul>
+  </div>
+
+</div>
+
+</body></html>

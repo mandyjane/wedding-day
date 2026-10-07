@@ -109,6 +109,31 @@
     .share-btn i { font-size: 13px; }
     .share-btn.hidden { visibility: hidden; pointer-events: none; }
 
+    .header-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+    }
+    .timeline-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--rose-dark);
+      border: 0.5px solid var(--rose);
+      border-radius: 16px;
+      padding: 4px 10px;
+      cursor: pointer;
+      background: transparent;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: background 0.15s;
+      margin-top: 2px;
+    }
+    .timeline-btn:hover { background: rgba(200,169,167,0.1); }
+    .timeline-btn i { font-size: 13px; }
+
     /* ── Tabs ── */
     .tabs-wrap {
       background: var(--cream);
@@ -560,10 +585,16 @@
         <div class="header-title">L &amp; A ·· 14·10·26</div>
         <div class="header-sub" id="countdown-sub">Loading…</div>
       </div>
-      <button class="share-btn hidden" id="share-btn" aria-label="Share this list">
-        <i class="ti ti-share" aria-hidden="true"></i>
-        Share list
-      </button>
+      <div class="header-actions">
+        <a class="timeline-btn" id="timeline-btn" href="timeline.html" aria-label="Morning timeline">
+          <i class="ti ti-clock-hour-4" aria-hidden="true"></i>
+          Timeline
+        </a>
+        <button class="share-btn hidden" id="share-btn" aria-label="Share this list">
+          <i class="ti ti-share" aria-hidden="true"></i>
+          Share list
+        </button>
+      </div>
     </div>
     <div class="progress-wrap" id="progress-wrap" style="display:none">
       <div class="progress-bar" id="progress-bar" style="width:0%"></div>
