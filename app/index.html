@@ -780,7 +780,6 @@ const DEFAULT_DATA = {
             { id: 'w9', text: 'Fix 2nd bouquet', note: '', checked: false },
             { id: 'w10', text: 'Even stems and add ribbon to bouquets', note: '', checked: false },
             { id: 'w11', text: 'Reconfigure aisle walk song', note: '', checked: false },
-            { id: 'w12', text: 'Buy 2 pillows', note: '', checked: false },
             { id: 'w14', text: 'Put towels on spare bed', note: '', checked: false },
           ]
         },
@@ -809,6 +808,7 @@ const DEFAULT_DATA = {
           items: [
             { id: 'sh1', text: 'Garlic bread', note: 'Groceries', checked: false },
             { id: 'sh2', text: '2 × Bedside tables', note: 'Other', checked: false },
+            { id: 'sh3', text: '2 × Pillows', note: 'Other', checked: false },
           ]
         },
         {
@@ -1300,7 +1300,6 @@ function sortByDateNote(items) {
         { id: 'w9', text: 'Fix 2nd bouquet' },
         { id: 'w10', text: 'Even stems and add ribbon to bouquets' },
         { id: 'w11', text: 'Reconfigure aisle walk song' },
-        { id: 'w12', text: 'Buy 2 pillows' },
         { id: 'w14', text: 'Put towels on spare bed' },
       ];
       adds.forEach(a => {
@@ -1308,8 +1307,8 @@ function sortByDateNote(items) {
           weekTodo.items.push({ id: a.id, text: a.text, note: '', checked: false });
         }
       });
-      // Bedside tables moved from To do to the Shopping list
-      weekTodo.items = weekTodo.items.filter(i => i.id !== 'w13');
+      // Pillows & bedside tables moved from To do to the Shopping list
+      weekTodo.items = weekTodo.items.filter(i => i.id !== 'w13' && i.id !== 'w12');
     }
     // Add Shopping list section to This week if missing
     if (week && !week.sections.some(s => s.id === 's-week-shopping')) {
@@ -1321,6 +1320,13 @@ function sortByDateNote(items) {
         const copy = JSON.parse(JSON.stringify(defShop));
         if (idx > -1) week.sections.splice(idx, 0, copy);
         else week.sections.push(copy);
+      }
+    }
+    // Ensure pillows are in the Shopping list (for apps that already have the section)
+    if (week) {
+      const shop = week.sections.find(s => s.id === 's-week-shopping');
+      if (shop && !shop.items.some(i => i.id === 'sh3')) {
+        shop.items.push({ id: 'sh3', text: '2 × Pillows', note: 'Other', checked: false });
       }
     }
     // Add notes to Groom's florals if they have none yet
