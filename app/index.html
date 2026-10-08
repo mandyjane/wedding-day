@@ -799,6 +799,7 @@ const DEFAULT_DATA = {
           name: 'Meals',
           items: [
             { id: 'ml1', text: 'Lasagne', note: 'Friday 9th Oct · Dinner', checked: false },
+            { id: 'ml3', text: 'Charcuterie', note: 'Saturday 10th Oct', checked: false },
             { id: 'ml2', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · Lunch', checked: false },
           ]
         },
@@ -1245,6 +1246,10 @@ function sortByDateNote(items) {
         // Rename Friday dinner from Fish & chips to Lasagne
         const ml1 = meals.items.find(i => i.id === 'ml1');
         if (ml1 && ml1.text === 'Fish & chips') ml1.text = 'Lasagne';
+        // Add Saturday Charcuterie if missing
+        if (!meals.items.some(i => i.id === 'ml3')) {
+          meals.items.push({ id: 'ml3', text: 'Charcuterie', note: 'Saturday 10th Oct', checked: false });
+        }
         sortByDateNote(meals.items);
       }
       // Ensure Appointments sits above House clean
