@@ -800,7 +800,7 @@ const DEFAULT_DATA = {
           id: 's-week-meals',
           name: 'Meals',
           items: [
-            { id: 'ml1', text: 'Fish & chips', note: 'Friday 9th Oct · Dinner', checked: false },
+            { id: 'ml1', text: 'Lasagne', note: 'Friday 9th Oct · Dinner', checked: false },
             { id: 'ml2', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · Lunch', checked: false },
           ]
         },
@@ -1230,11 +1230,14 @@ function sortByDateNote(items) {
       const meals = week.sections.find(s => s.id === 's-week-meals');
       if (meals) {
         if (!meals.items.some(i => i.id === 'ml1')) {
-          meals.items.push({ id: 'ml1', text: 'Fish & chips', note: 'Friday 9th Oct · Dinner', checked: false });
+          meals.items.push({ id: 'ml1', text: 'Lasagne', note: 'Friday 9th Oct · Dinner', checked: false });
         }
         if (!meals.items.some(i => i.id === 'ml2')) {
           meals.items.push({ id: 'ml2', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · Lunch', checked: false });
         }
+        // Rename Friday dinner from Fish & chips to Lasagne
+        const ml1 = meals.items.find(i => i.id === 'ml1');
+        if (ml1 && ml1.text === 'Fish & chips') ml1.text = 'Lasagne';
         sortByDateNote(meals.items);
       }
       // Ensure Appointments sits above House clean
