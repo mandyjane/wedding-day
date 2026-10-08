@@ -781,7 +781,6 @@ const DEFAULT_DATA = {
             { id: 'w10', text: 'Even stems and add ribbon to bouquets', note: '', checked: false },
             { id: 'w11', text: 'Reconfigure aisle walk song', note: '', checked: false },
             { id: 'w12', text: 'Buy 2 pillows', note: '', checked: false },
-            { id: 'w13', text: 'Buy 2 bedside tables', note: '', checked: false },
             { id: 'w14', text: 'Put towels on spare bed', note: '', checked: false },
           ]
         },
@@ -802,6 +801,14 @@ const DEFAULT_DATA = {
           items: [
             { id: 'ml1', text: 'Lasagne', note: 'Friday 9th Oct · Dinner', checked: false },
             { id: 'ml2', text: 'Sunday lunch — meet the parents ft. Tooty', note: 'Sunday 11th Oct · Lunch', checked: false },
+          ]
+        },
+        {
+          id: 's-week-shopping',
+          name: 'Shopping list',
+          items: [
+            { id: 'sh1', text: 'Garlic bread', note: 'Groceries', checked: false },
+            { id: 'sh2', text: '2 × Bedside tables', note: 'Other', checked: false },
           ]
         },
         {
@@ -1294,7 +1301,6 @@ function sortByDateNote(items) {
         { id: 'w10', text: 'Even stems and add ribbon to bouquets' },
         { id: 'w11', text: 'Reconfigure aisle walk song' },
         { id: 'w12', text: 'Buy 2 pillows' },
-        { id: 'w13', text: 'Buy 2 bedside tables' },
         { id: 'w14', text: 'Put towels on spare bed' },
       ];
       adds.forEach(a => {
@@ -1302,6 +1308,20 @@ function sortByDateNote(items) {
           weekTodo.items.push({ id: a.id, text: a.text, note: '', checked: false });
         }
       });
+      // Bedside tables moved from To do to the Shopping list
+      weekTodo.items = weekTodo.items.filter(i => i.id !== 'w13');
+    }
+    // Add Shopping list section to This week if missing
+    if (week && !week.sections.some(s => s.id === 's-week-shopping')) {
+      const defWk = DEFAULT_DATA.lists.find(l => l.id === 'week');
+      const defShop = defWk && defWk.sections.find(s => s.id === 's-week-shopping');
+      if (defShop) {
+        // insert before Clean, after Meals if present
+        const idx = week.sections.findIndex(s => s.id === 's-week-clean');
+        const copy = JSON.parse(JSON.stringify(defShop));
+        if (idx > -1) week.sections.splice(idx, 0, copy);
+        else week.sections.push(copy);
+      }
     }
     // Add notes to Groom's florals if they have none yet
     const groom = data.lists && data.lists.find(l => l.id === 'groom');
